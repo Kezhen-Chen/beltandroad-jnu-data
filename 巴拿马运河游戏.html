@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>巴拿马运河船闸模拟游戏 - 增强版</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #1a2980, #26d0ce);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 容器放大 */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            transform: scale(0.5); /* 缩小到原来的50% */
+            transform-origin: top center;
+        }
+        
+        header {
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .description {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 25px;
+            line-height: 1.6;
+        }
+        
+        .game-area {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: #1e5799;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        /* 水域样式 */
+        .ocean {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(to bottom, #2c3e50, #3498db);
+        }
+        
+        .atlantic {
+            width: 25%;
+            right: 0;
+            border-left: 3px dashed rgba(255,255,255,0.5);
+        }
+        
+        .pacific {
+            width: 25%;
+            left: 0;
+            border-right: 3px dashed rgba(255,255,255,0.5);
+        }
+        
+        .lake {
+            width: 50%;
+            left: 25%;
+            background: linear-gradient(to bottom, #1a5fad, #1e88e5);
+            height: 60%;
+            top: 0;
+        }
+        
+        /* 船闸样式 */
+        .lock {
+            position: absolute;
+            width: 60px;
+            height: 100%;
+            background: #7f8c8d;
+            z-index: 2;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+            border-left: 4px solid #34495e;
+            border-right: 4px solid #34495e;
+        }
+        
+        .lock-left {
+            left: 25%;
+        }
+        
+        .lock-right {
+            right: 25%;
+        }
+        
+        .lock-gate {
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            background: #95a5a6;
+            border: 3px solid #2c3e50;
+            z-index: 3;
+        }
+        
+        .lock-top-gate {
+            top: 40%;
+        }
+        
+        .lock-bottom-gate {
+            bottom: 0;
+        }
+        
+        /* 轮船样式 */
+        .ship {
+            position: absolute;
+            width: 70px;
+            height: 30px;
+            background: #e74c3c;
+            border-radius: 8px 8px 0 0;
+            z-index: 4;
+            transition: all 3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .ship::before {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 40px;
+            background: #f39c12;
+            top: -40px;
+            left: 15px;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .ship::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background: #3498db;
+            top: -20px;
+            right: 10px;
+            border-radius: 3px;
+        }
+        
+        /* 控制面板 */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            min-width: 250px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background: #27ae60;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .message-box {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            backdrop-filter: blur(8px);
+            margin-top: 20px;
+            border: 2px solid rgba(255,255,255,0.25);
+        }
+        
+        .info-panel {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .info-item {
+            text-align: center;
+            min-width: 200px;
+        }
+        
+        .info-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #bdc3c7;
+        }
+        
+        .info-value {
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        /* 海洋标注 */
+        .ocean-label {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .atlantic-label {
+            right: 10%;
+        }
+
+        .pacific-label {
+            left: 10%;
+        }
+
+        /* 步骤指示器 */
+        .steps {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+            gap: 15px;
+        }
+        
+        .step {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        
+        .step.active {
+            background: #f1c40f;
+            color: #2c3e50;
+            transform: scale(1.1);
+        }
+        
+        .step.completed {
+            background: #2ecc71;
+        }
+        
+        /* 标语样式 */
+        .slogan {
+            position: absolute;
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ffeb3b;
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 235, 59, 0.8);
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 1s;
+            pointer-events: none;
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 90%;
+            transform: translateZ(0);
+        }
+        
+        .slogan.show {
+            opacity: 1;
+        }
+        
+        .slogan.up-slogan {
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(213, 0, 0, 0.85);
+        }
+        
+        .slogan.left-slogan {
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 100, 0, 0.85);
+            color: #ffffff;
+            width: 100%;
+        }
+        
+        .slogan.down-slogan {
+            left: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 139, 0.85);
+        }
+        
+        /* 结束覆盖页 */
+        #end-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 50, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+        
+        #end-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .end-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 40px;
+        }
+        
+        .end-title {
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            color: #ffeb3b;
+            text-shadow: 0 0 15px rgba(255, 235, 59, 0.8);
+        }
+        
+        .end-description {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .end-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .end-btn {
+            padding: 18px 40px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 280px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            font-weight: bold;
+        }
+        
+        .end-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+        }
+        
+        .end-btn.replay {
+            background: linear-gradient(to right, #ff9800, #ff5722);
+        }
+        
+        .end-btn.home {
+            background: linear-gradient(to right, #2196F3, #03A9F4);
+        }
+        
+        .end-btn.review {
+            background: linear-gradient(to right, #9C27B0, #673AB7);
+        }
+        
+        .game-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffeb3b;
+            text-shadow: 0 0 10px rgba(0,0,0,0.7);
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+    <!-- 游戏容器 -->
+    <div class="container">
+        <header>
+            <h1>巴拿马运河船闸原理模拟器</h1>
+            <p class="description">体验集装箱船如何通过巴拿马运河船闸系统从大西洋到太平洋</p>
+        </header>
+        
+        <div class="steps">
+            <div class="step completed">1</div>
+            <div class="step">2</div>
+            <div class="step">3</div>
+            <div class="step">4</div>
+        </div>
+        
+        <div class="game-area">
+            <!-- 水域分区 -->
+            <div class="ocean atlantic"></div>
+                <div class="ocean-label atlantic-label">大西洋</div>
+            <div class="ocean pacific"></div>
+                <div class="ocean-label pacific-label">太平洋</div>
+            <div class="ocean lake"></div>
+            
+            <!-- 船闸 -->
+            <div class="lock lock-left">
+                <div class="lock-gate lock-top-gate"></div>
+                <div class="lock-gate lock-bottom-gate"></div>
+            </div>
+            <div class="lock lock-right">
+                <div class="lock-gate lock-top-gate"></div>
+                <div class="lock-gate lock-bottom-gate"></div>
+            </div>
+            
+            <!-- 轮船 -->
+            <div class="ship" id="ship"></div>
+            
+            <div class="game-logo">国家战略发展模拟</div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="upBtn">逆流而上驶入加通湖</button>
+            <button class="btn" id="leftBtn" disabled>向左驶过加通湖</button>
+            <button class="btn" id="downBtn" disabled>顺流而下驶入太平洋</button>
+            <button class="btn" id="resetBtn">重置游戏</button>
+        </div>
+        
+        <div class="message-box" id="message">
+            准备开始航行！点击"向上驶入加通湖"按钮启动
+        </div>
+        
+        <div class="info-panel">
+            <div class="info-item">
+                <div class="info-title">当前水位差</div>
+                <div class="info-value">0 米</div>
+            </div>
+            <div class="info-item">
+                <div class="info-title">航行状态</div>
+                <div class="info-value" id="status">停泊中</div>
+            </div>
+            <div class="info-item">
+                <div class="info-title">航行进度</div>
+                <div class="info-value">0%</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 新增标语 -->
+    <div class="slogan up-slogan" id="upSlogan">逆流而上：顶住单边霸权的压力</div>
+    <div class="slogan left-slogan" id="leftSlogan">独立自主：坚持发展国民经济</div>
+    <div class="slogan down-slogan" id="downSlogan">顺势而为：融入一带一路倡议</div>
+    
+    <!-- 结束覆盖页 -->
+    <div id="end-overlay">
+        <div class="end-content">
+            <h2 class="end-title">航行完成！</h2>
+            <p class="end-description">您已成功完成巴拿马运河航行模拟！让我们一起逆流而上，顶住单边霸权的压力；
+                在右翼保守主义的全球浪潮中，坚持独立自主向左行驶，驶向团结与开放；顺势而为，坚持一带一路倡议。让我们一起从西方向东方航行，穿过道道关卡，驶入太平洋。</p>
+            
+            <div class="end-buttons">
+                <button class="end-btn replay" id="replayBtn">再玩一次</button>
+                <button class="end-btn home" id="homeBtn">返回首页</button>
+                <button class="end-btn review" id="reviewBtn">回顾达尔文港事件</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ship = document.getElementById('ship');
+            const upBtn = document.getElementById('upBtn');
+            const leftBtn = document.getElementById('leftBtn');
+            const downBtn = document.getElementById('downBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const message = document.getElementById('message');
+            const statusText = document.getElementById('status');
+            const steps = document.querySelectorAll('.step');
+            const upSlogan = document.getElementById('upSlogan');
+            const leftSlogan = document.getElementById('leftSlogan');
+            const downSlogan = document.getElementById('downSlogan');
+            const endOverlay = document.getElementById('end-overlay');
+            const replayBtn = document.getElementById('replayBtn');
+            const homeBtn = document.getElementById('homeBtn');
+            const reviewBtn = document.getElementById('reviewBtn');
+            
+            // 初始位置 (大西洋)
+            ship.style.bottom = '50px';
+            ship.style.right = '25%';
+            
+            // 步骤计数器
+            let currentStep = 0;
+            
+            // 更新步骤指示器
+            function updateSteps() {
+                steps.forEach((step, index) => {
+                    step.classList.remove('active', 'completed');
+                    if (index < currentStep) {
+                        step.classList.add('completed');
+                    } else if (index === currentStep) {
+                        step.classList.add('active');
+                    }
+                });
+            }
+            
+            // 显示标语
+            function showSlogan(slogan) {
+                slogan.classList.add('show');
+                setTimeout(() => {
+                    slogan.classList.remove('show');
+                }, 3000);
+            }
+            
+            // 向上驶入加通湖
+            upBtn.addEventListener('click', function() {
+                message.textContent = "正在向上驶入加通湖... 船闸注水中，水位上升26米";
+                statusText.textContent = "上升中";
+                
+                // 显示标语
+                showSlogan(upSlogan);
+                
+                // 移动船到右侧船闸
+                ship.style.right = '25%';
+                ship.style.bottom = '50px';
+                
+                setTimeout(() => {
+                    // 上升过程
+                    ship.style.bottom = '60%';
+                    
+                    setTimeout(() => {
+                        message.textContent = "成功进入加通湖！";
+                        statusText.textContent = "在加通湖停泊";
+                        currentStep = 1;
+                        updateSteps();
+                        upBtn.disabled = true;
+                        leftBtn.disabled = false;
+                    }, 3000);
+                }, 1000);
+            });
+            
+            // 向左驶过加通湖
+            leftBtn.addEventListener('click', function() {
+                message.textContent = "正在向左驶过加通湖...";
+                statusText.textContent = "横向航行中";
+                
+                // 显示标语
+                showSlogan(leftSlogan);
+                
+                // 移动船到加通湖中央
+                ship.style.right = '25%';
+                ship.style.bottom = '60%';
+                
+                setTimeout(() => {
+                    ship.style.right = '50%';
+                    
+                    setTimeout(() => {
+                        message.textContent = "已到达加通湖左侧！";
+                        statusText.textContent = "在加通湖停泊";
+                        currentStep = 2;
+                        updateSteps();
+                        leftBtn.disabled = true;
+                        downBtn.disabled = false;
+                    }, 3000);
+                }, 1000);
+            });
+            
+            // 向下驶入太平洋
+            downBtn.addEventListener('click', function() {
+                message.textContent = "正在向下驶入太平洋... 船闸排水中，水位下降26米";
+                statusText.textContent = "下降中";
+                
+                // 显示标语
+                showSlogan(downSlogan);
+                
+                // 移动船到左侧船闸
+                ship.style.right = '50%';
+                ship.style.bottom = '60%';
+                
+                setTimeout(() => {
+                    // 下降过程
+                    ship.style.bottom = '50px';
+                    
+                    setTimeout(() => {
+                        // 移动到太平洋
+                        ship.style.right = '75%';
+                        
+                        setTimeout(() => {
+                            message.textContent = "成功抵达太平洋！航行完成！";
+                            statusText.textContent = "在太平洋停泊";
+                            currentStep = 3;
+                            updateSteps();
+                            downBtn.disabled = true;
+                            
+                            // 显示结束页
+                            setTimeout(() => {
+                                endOverlay.classList.add('show');
+                            }, 2000);
+                        }, 2000);
+                    }, 3000);
+                }, 1000);
+            });
+            
+            // 重置游戏
+            resetBtn.addEventListener('click', function() {
+                ship.style.bottom = '50px';
+                ship.style.right = '25%';
+                
+                message.textContent = "已重置！准备开始航行";
+                statusText.textContent = "停泊中";
+                
+                upBtn.disabled = false;
+                leftBtn.disabled = true;
+                downBtn.disabled = true;
+                
+                currentStep = 0;
+                updateSteps();
+                
+                // 隐藏结束页
+                endOverlay.classList.remove('show');
+            });
+            
+            // 再玩一次
+            replayBtn.addEventListener('click', function() {
+                endOverlay.classList.remove('show');
+                resetBtn.click();
+            });
+            
+            // 返回首页
+            // 添加点击事件监听器
+            homeBtn.addEventListener('click', () => {
+                // 跳转到首页
+                window.location.href = 'index.html#panama';
+            });
+
+            // 回顾达尔文港事件
+            reviewBtn.addEventListener('click', () => {
+                // 跳转到达尔文港事件页面
+                window.location.href = '达尔文港.html';
+            });
+            
+            // 初始化步骤指示器
+            updateSteps();
+        });
+    </script>
+</body>
+</html>

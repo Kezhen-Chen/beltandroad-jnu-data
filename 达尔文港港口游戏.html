@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一分钟达尔文港保卫战</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        .game-container {
+            background: rgba(0, 20, 40, 0.85);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #2a7fff;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .game-container:hover {
+            transform: scale(0.97);
+        }
+
+        .header {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            color: #ffcc00;
+            text-shadow: 0 0 8px rgba(255, 204, 0, 0.7);
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 40, 80, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #3a8fff;
+            font-size: 0.9rem;
+        }
+
+        .stat {
+            flex: 1;
+            padding: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #4aff4a;
+            margin-top: 3px;
+        }
+
+        .port-area {
+            background: linear-gradient(to bottom, #0a4a8a, #0a2a5a);
+            border: 2px solid #3a5f8f;
+            border-radius: 8px;
+            height: 180px;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .water {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to bottom, #1a6aaa, #0d3a6a);
+            background-size: 200% 200%;
+            animation: waterAnimation 5s infinite linear;
+        }
+
+        .facilities {
+            position: absolute;
+            bottom: 40%;
+            width: 100%;
+            height: 60%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding: 0 15px;
+        }
+
+        .facility {
+            position: relative;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .facility-icon {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.5));
+        }
+
+        .facility-name {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: linear-gradient(to bottom, #ffcc00, #ff9900);
+            color: #1a2a6c;
+            box-shadow: 0 3px 0 #cc7a00;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 0 #cc7a00;
+        }
+
+        .action-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 0 #cc7a00;
+        }
+
+        .action-btn.cooperation {
+            background: linear-gradient(to bottom, #4aff4a, #00cc00);
+            box-shadow: 0 3px 0 #009900;
+            color: #003300;
+        }
+
+        .action-btn.cooperation:hover {
+            box-shadow: 0 5px 0 #009900;
+        }
+
+        .action-btn.cooperation:active {
+            box-shadow: 0 2px 0 #009900;
+        }
+
+        .timer-container {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 40px;
+            height: 20px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 1px solid #ffcc00;
+        }
+
+        .timer-bar {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(to right, #ff3333, #ffcc00);
+            transition: width 1s linear;
+        }
+
+        .message-area {
+            min-height: 60px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            border: 1px solid #3a8fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message {
+            animation: messageAppear 0.5s ease-out;
+        }
+
+        .results {
+            /* 修改样式，使其类似开始过渡页面 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 30, 60, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            padding: 15px;
+            text-align: center;
+            border-radius: 12px;
+        }
+
+        .results h2 {
+            color: #ffcc00;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+        }
+
+        .result-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+        }
+
+        .result-stat {
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #4aff4a;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .result-btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 3px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .result-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .result-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .restart-btn {
+            background: linear-gradient(to bottom, #4aff4a, #00cc00);
+            color: #003300;
+        }
+
+        .home-btn {
+            background: linear-gradient(to bottom, #ffcc00, #ff9900);
+            color: #1a2a6c;
+        }
+
+        .next-btn {
+            background: linear-gradient(to bottom, #4a9cff, #0066cc);
+            color: #fff;
+        }
+
+        .event-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(200, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            animation: pulseWarning 0.5s infinite alternate;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .help-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 100, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 15px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        @keyframes waterAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes pulseWarning {
+            from {
+                background-color: rgba(200, 0, 0, 0.7);
+            }
+
+            to {
+                background-color: rgba(150, 0, 0, 0.9);
+            }
+        }
+
+        @keyframes messageAppear {
+            from {
+                transform: translateY(10px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .cargo-ship {
+            position: absolute;
+            bottom: 40%;
+            right: -80px;
+            font-size: 2rem;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        /* 开始页面样式 */
+        .start-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 30, 60, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .start-title {
+            font-size: 1.8rem;
+            color: #ffcc00;
+            margin-bottom: 15px;
+        }
+
+        .instructions {
+            background: rgba(0, 40, 80, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #3a8fff;
+            font-size: 0.9rem;
+        }
+
+        .instructions h3 {
+            color: #4aff4a;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .instructions ul {
+            text-align: left;
+            margin: 10px 0;
+            padding-left: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .start-btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            background: linear-gradient(to bottom, #ffcc00, #ff9900);
+            color: #1a2a6c;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 0 #cc7a00;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 #cc7a00;
+        }
+
+        .start-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 0 #cc7a00;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .game-container {
+                transform: scale(0.9);
+                max-width: 95%;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game-container">
+        <!-- 开始页面 -->
+        <div class="start-overlay" id="start-overlay">
+            <h1 class="start-title">达尔文港保卫战</h1>
+
+            <div class="instructions">
+                <h3>游戏说明</h3>
+                <p>在60秒内管理达尔文港，抵御政治干扰，通过一带一路合作发展港口！</p>
+
+                <ul>
+                    <li><strong>港口价值</strong>：随时间自动增长</li>
+                    <li><strong>升级设施</strong>：提高港口价值增长速度</li>
+                    <li><strong>一带一路合作</strong>：获得国际支持</li>
+                    <li><strong>注意</strong>：澳方可能进行安全审查等干扰</li>
+                </ul>
+            </div>
+
+            <button class="start-btn" id="start-btn">开始游戏</button>
+        </div>
+
+        <div class="header">
+            <h1>一分钟达尔文港保卫战</h1>
+            <p class="subtitle">抵御干扰，建设港口，展现一带一路合作的力量</p>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat">
+                <div>港口价值</div>
+                <div class="stat-value" id="port-value">¥500</div>
+            </div>
+            <div class="stat">
+                <div>一带一路合作</div>
+                <div class="stat-value" id="cooperation">0</div>
+            </div>
+            <div class="stat">
+                <div>设施等级</div>
+                <div class="stat-value" id="facility-level">1</div>
+            </div>
+        </div>
+
+        <div class="port-area">
+            <div class="water"></div>
+            <div class="facilities">
+                <div class="facility" id="pier">
+                    <div class="facility-icon">⚓</div>
+                    <div class="facility-name">码头</div>
+                </div>
+                <div class="facility" id="crane">
+                    <div class="facility-icon">🏗️</div>
+                    <div class="facility-name">起重机</div>
+                </div>
+                <div class="facility" id="trade-center">
+                    <div class="facility-icon">🏢</div>
+                    <div class="facility-name">贸易中心</div>
+                </div>
+            </div>
+            <div class="cargo-ship">🚢</div>
+            <div class="event-overlay" id="event-overlay">澳方安全审查中...</div>
+            <div class="help-overlay" id="help-overlay">一带一路国家支援！</div>
+        </div>
+
+        <div class="actions">
+            <button class="action-btn" id="upgrade-btn">升级设施 (¥100)</button>
+            <button class="action-btn cooperation" id="cooperation-btn">一带一路合作 (¥100)</button>
+        </div>
+
+        <div class="timer-container">
+            <div class="timer-bar" id="timer-bar"></div>
+        </div>
+
+        <div class="message-area">
+            <div class="message" id="message">点击按钮升级港口设施或寻求一带一路合作！</div>
+        </div>
+
+        <div class="results" id="results">
+            <h2>游戏结束</h2>
+            <div id="result-message"></div>
+
+            <div class="result-stats">
+                <div class="result-stat">
+                    <div>最终港口价值</div>
+                    <div class="result-value" id="final-value">¥0</div>
+                </div>
+                <div class="result-stat">
+                    <div>一带一路合作</div>
+                    <div class="result-value" id="final-cooperation">0</div>
+                </div>
+            </div>
+
+            <div id="political-commentary"></div>
+
+            <div class="result-actions">
+                <button class="result-btn restart-btn" id="restart-btn">再玩一次</button>
+                <button class="result-btn home-btn" id="home-btn">返回首页</button>
+                <button class="result-btn next-btn" id="next-btn">了解尼日尔事件</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 游戏状态
+        const gameState = {
+            portValue: 500,
+            cooperation: 0,
+            facilityLevel: 1,
+            timeLeft: 60,
+            gameActive: false,
+            upgradeCost: 100,
+            cooperationCost: 100,
+            eventActive: false,
+            helpActive: false
+        };
+
+        // DOM元素
+        const elements = {
+            startOverlay: document.getElementById('start-overlay'),
+            startBtn: document.getElementById('start-btn'),
+            portValue: document.getElementById('port-value'),
+            cooperation: document.getElementById('cooperation'),
+            facilityLevel: document.getElementById('facility-level'),
+            timerBar: document.getElementById('timer-bar'),
+            message: document.getElementById('message'),
+            results: document.getElementById('results'),
+            resultMessage: document.getElementById('result-message'),
+            finalValue: document.getElementById('final-value'),
+            finalCooperation: document.getElementById('final-cooperation'),
+            politicalCommentary: document.getElementById('political-commentary'),
+            upgradeBtn: document.getElementById('upgrade-btn'),
+            cooperationBtn: document.getElementById('cooperation-btn'),
+            restartBtn: document.getElementById('restart-btn'),
+            homeBtn: document.getElementById('home-btn'),
+            nextBtn: document.getElementById('next-btn'),
+            eventOverlay: document.getElementById('event-overlay'),
+            helpOverlay: document.getElementById('help-overlay'),
+            cargoShip: document.querySelector('.cargo-ship')
+        };
+
+        // 消息列表
+        const messages = {
+            australiaEvents: [
+                "澳方宣布安全审查：港口建设暂停！",
+                "政治干预：无理要求收回港口！",
+                "澳方设置贸易壁垒：港口收入减少！",
+                "西方媒体炒作'中国威胁论'！",
+                "澳方寻求其他承包商：港口价值下降！"
+            ],
+            cooperationEvents: [
+                "中国提供基础设施建设支持！",
+                "一带一路国家增加贸易往来！",
+                "东南亚国家提供物流支持！",
+                "合作共赢化解政治干扰！",
+                "一带一路倡议带来新投资！"
+            ]
+        };
+
+        // 初始化游戏
+        function initGame() {
+            gameState.portValue = 500;
+            gameState.cooperation = 0;
+            gameState.facilityLevel = 1;
+            gameState.timeLeft = 60;
+            gameState.gameActive = true;
+            gameState.upgradeCost = 100;
+            gameState.cooperationCost = 100;
+            gameState.eventActive = false;
+            gameState.helpActive = false;
+
+            updateUI();
+            elements.results.style.display = 'none';
+            elements.eventOverlay.style.opacity = '0';
+            elements.helpOverlay.style.opacity = '0';
+            elements.cargoShip.style.right = '-80px';
+
+            // 开始游戏循环
+            gameLoop();
+        }
+
+        // 游戏主循环
+        function gameLoop() {
+            if (!gameState.gameActive) return;
+
+            // 更新时间
+            gameState.timeLeft--;
+            elements.timerBar.style.width = `${(gameState.timeLeft / 60) * 100}%`;
+
+            // 自动增加港口价值
+            gameState.portValue += gameState.facilityLevel * 10;
+
+            // 随机事件
+            if (!gameState.eventActive && !gameState.helpActive && Math.random() < 0.15) {
+                triggerRandomEvent();
+            }
+
+            // 一带一路帮助效果
+            if (gameState.helpActive) {
+                gameState.portValue += 30;
+            }
+
+            updateUI();
+
+            // 检查游戏结束
+            if (gameState.timeLeft <= 0) {
+                endGame();
+                return;
+            }
+
+            // 继续循环
+            setTimeout(gameLoop, 1000);
+        }
+
+        // 触发随机事件
+        function triggerRandomEvent() {
+            // 80%几率负面事件，20%几率正面事件
+            if (Math.random() < 0.7) {
+                triggerAustraliaEvent();
+            } else {
+                triggerCooperationEvent();
+            }
+        }
+
+        // 触发澳大利亚干扰事件
+        function triggerAustraliaEvent() {
+            gameState.eventActive = true;
+            elements.eventOverlay.textContent = messages.australiaEvents[Math.floor(Math.random() * messages.australiaEvents.length)];
+            elements.eventOverlay.style.opacity = '1';
+
+            // 负面效果
+            gameState.portValue *= 0.7; // 减少30%价值
+
+            setTimeout(() => {
+                gameState.eventActive = false;
+                elements.eventOverlay.style.opacity = '0';
+            }, 3000);
+        }
+
+        // 触发一带一路合作事件
+        function triggerCooperationEvent() {
+            gameState.helpActive = true;
+            elements.helpOverlay.textContent = messages.cooperationEvents[Math.floor(Math.random() * messages.cooperationEvents.length)];
+            elements.helpOverlay.style.opacity = '1';
+
+            // 显示货船动画
+            elements.cargoShip.style.right = '40px';
+
+            setTimeout(() => {
+                gameState.helpActive = false;
+                elements.helpOverlay.style.opacity = '0';
+                elements.cargoShip.style.right = '-80px';
+            }, 3000);
+        }
+
+        // 升级设施
+        function upgradeFacility() {
+            if (gameState.portValue >= gameState.upgradeCost) {
+                gameState.portValue -= gameState.upgradeCost;
+                gameState.facilityLevel++;
+                gameState.upgradeCost = Math.round(gameState.upgradeCost * 1.8);
+
+                elements.message.textContent = `设施升级至等级 ${gameState.facilityLevel}！港口收入增加。`;
+                updateUI();
+            } else {
+                elements.message.textContent = "资金不足，无法升级设施！";
+            }
+        }
+
+        // 一带一路合作
+        function seekCooperation() {
+            if (gameState.portValue >= gameState.cooperationCost) {
+                gameState.portValue -= gameState.cooperationCost;
+                gameState.cooperation += 15 + Math.floor(Math.random() * 5);
+                gameState.cooperationCost = Math.round(gameState.cooperationCost * 1.5);
+
+                elements.message.textContent = "一带一路合作加强！港口获得国际支持。";
+                updateUI();
+
+                // 有几率触发正面事件
+                if (Math.random() < 0.5) {
+                    setTimeout(triggerCooperationEvent, 1000);
+                }
+            } else {
+                elements.message.textContent = "资金不足，无法寻求合作！";
+            }
+        }
+
+        // 更新UI
+        function updateUI() {
+            elements.portValue.textContent = `¥${Math.round(gameState.portValue)}`;
+            elements.cooperation.textContent = gameState.cooperation;
+            elements.facilityLevel.textContent = gameState.facilityLevel;
+            elements.upgradeBtn.textContent = `升级设施 (¥${gameState.upgradeCost})`;
+            elements.cooperationBtn.textContent = `一带一路合作 (¥${gameState.cooperationCost})`;
+        }
+
+        // 结束游戏
+        function endGame() {
+            gameState.gameActive = false;
+
+            // 计算最终得分
+            const finalScore = Math.round(gameState.portValue * (1 + gameState.cooperation / 100));
+
+            // 显示结果
+            elements.finalValue.textContent = `¥${Math.round(gameState.portValue)}`;
+            elements.finalCooperation.textContent = gameState.cooperation;
+
+            // 政治评论
+            let commentary = "";
+            if (gameState.cooperation >= 30) {
+                elements.resultMessage.innerHTML = "<p style='font-size:1.1rem;color:#4aff4a;margin:10px 0;'>一带一路合作成功！港口繁荣发展。</p>";
+                commentary = "一带一路倡议通过国际合作化解了政治干扰，实现了双赢局面。";
+            } else {
+                elements.resultMessage.innerHTML = "<p style='font-size:1.1rem;color:#ff6666;margin:10px 0;'>政治干扰阻碍了港口发展。</p>";
+                commentary = "澳大利亚的政治干预损害了港口的经济价值，一带一路合作可提供解决方案。";
+            }
+
+            elements.politicalCommentary.innerHTML = `<p style='font-size:0.9rem;'>${commentary}</p>`;
+            // 修改为显示过渡页面
+            elements.results.style.display = 'flex';
+        }
+
+        // 事件监听
+        elements.startBtn.addEventListener('click', () => {
+            elements.startOverlay.style.display = 'none';
+            initGame();
+        });
+
+        elements.upgradeBtn.addEventListener('click', upgradeFacility);
+        elements.cooperationBtn.addEventListener('click', seekCooperation);
+        elements.restartBtn.addEventListener('click', () => {
+            elements.results.style.display = 'none';
+            initGame();
+        });
+
+        elements.homeBtn.addEventListener('click', () => {
+            window.location.href = "index.html#darwin";
+            // window.location.href = "index.html";
+        });
+
+        elements.nextBtn.addEventListener('click', () => {
+            window.location.href = "尼日尔.html";
+            // window.location.href = "尼日尔.html";
+        });
+    </script>
+</body>
+
+</html>

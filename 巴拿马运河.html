@@ -1,0 +1,1903 @@
+<html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>巴拿马运河风波：从历史遗产到主权博弈</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#284139',
+            secondary: '#809076',
+            accent: '#F8D794',
+            highlight: '#BB6830',
+            dark: '#111A19'
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+      .timeline-dot::before {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #BB6830;
+        left: -10px;
+        top: 5px;
+      }
+      .timeline-line::before {
+        content: '';
+        position: absolute;
+        width: 2px;
+        height: 100%;
+        background-color: #809076;
+        left: 0;
+        top: 0;
+      }
+      .card-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background-color: #F8D794;
+        transition: width 0.3s ease;
+      }
+      .nav-link:hover::after {
+        width: 100%;
+      }
+      .hero-gradient {
+        background: linear-gradient(135deg, #284139 0%, #111A19 100%);
+      }
+      .stat-card {
+        background: linear-gradient(145deg, #284139 0%, #111A19 100%);
+        transition: all 0.3s ease;
+      }
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #809076;
+        border-radius: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #284139;
+      }
+    }
+  </style>
+</head>
+
+<body class="font-inter bg-gray-50 text-dark custom-scrollbar">
+  <!-- 导航栏 -->
+  <header class="sticky top-0 z-50 bg-primary/95 text-white shadow-md transition-all duration-300 backdrop-blur-sm" id="navbar">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <i class="fa fa-ship text-accent text-2xl"></i>
+        <h1 class="text-xl font-bold">巴拿马运河风波</h1>
+      </div>
+      
+      <!-- 桌面导航 -->
+      <nav class="hidden md:flex space-x-8">
+        <a href="#intro" class="nav-link hover:text-accent transition-colors">导语</a>
+        <a href="#timeline" class="nav-link hover:text-accent transition-colors">时间轴</a>
+        <a href="#conflicts" class="nav-link hover:text-accent transition-colors">核心矛盾</a>
+        <a href="#results" class="nav-link hover:text-accent transition-colors">结果影响</a>
+        <a href="#opinions" class="nav-link hover:text-accent transition-colors">各方观点</a>
+        <a href="#future" class="nav-link hover:text-accent transition-colors">未来展望</a>
+      </nav>
+      
+      <!-- 移动端菜单按钮 -->
+      <button class="md:hidden text-white text-xl" id="menuBtn">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div class="md:hidden hidden bg-primary/95 absolute w-full" id="mobileMenu">
+      <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+        <a href="#intro" class="py-2 hover:text-accent transition-colors">导语</a>
+        <a href="#timeline" class="py-2 hover:text-accent transition-colors">时间轴</a>
+        <a href="#conflicts" class="py-2 hover:text-accent transition-colors">核心矛盾</a>
+        <a href="#results" class="py-2 hover:text-accent transition-colors">结果影响</a>
+        <a href="#opinions" class="py-2 hover:text-accent transition-colors">各方观点</a>
+        <a href="#future" class="py-2 hover:text-accent transition-colors">未来展望</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 英雄区域 -->
+  <section class="relative hero-gradient text-white py-32 md:py-48 overflow-hidden">
+    <div class="absolute inset-0 opacity-70">
+      <img src="img/10.无敌适合做封面的拼接图.jpg" alt="巴拿马运河背景" class="w-full h-full object-cover">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-primary/80 to-dark/60"></div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="inline-block px-6 py-2 bg-highlight/20 rounded-full mb-6 border border-highlight/40">
+          <p class="text-accent font-medium">从历史遗产到主权博弈的全球焦点</p>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 text-shadow leading-tight">
+          巴拿马运河<br class="md:hidden">风波
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+          一场围绕主权、经济与地缘政治的激烈博弈
+        </p>
+
+      </div>
+
+    </div>
+    <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-gray-50 to-transparent"></div>
+    <div class="absolute bottom-8 left-0 right-0 text-center">
+      <a href="#" class="text-white animate-bounce inline-block">
+        <i class="fa fa-chevron-down text-3xl"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- 主要内容 -->
+  <main class="container mx-auto px-4 py-12">
+    <!-- 导语部分 -->
+    <section id="intro" class="mb-16">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold mb-6 text-primary border-l-4 border-highlight pl-4">引言</h2>
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="md:flex">
+            <div class="md:w-1/3 bg-primary text-white p-6 flex items-center justify-center">
+              <div class="text-center">
+                <div class="text-5xl font-bold mb-2">1914</div>
+                <div class="text-xl mb-4">运河开通</div>
+                <div class="text-5xl font-bold mb-2">1999</div>
+                <div class="text-xl mb-4">主权移交</div>
+                <div class="text-5xl font-bold">2024</div>
+                <div class="text-xl">风波再起</div>
+              </div>
+            </div>
+            <div class="md:w-2/3 p-6 md:p-8">
+              <p class="text-lg leading-relaxed mb-4">
+                2024年12月21日，美国前总统唐纳德·特朗普在社交媒体上指责巴拿马运河对美国船只收费过高，并宣称巴拿马运河是"美国重要国家资产"，甚至威胁"收回"控制权。这一言论迅速引发国际关注，将巴拿马运河这一连接两大洋的战略水道再次推向风口浪尖。
+              </p>
+              <p class="text-lg leading-relaxed mb-4">
+                这条1914年由美国主导开凿、曾被其控制近一个世纪的运河，早已在1999年根据《托里霍斯-卡特条约》完全归还巴拿马。特朗普的表态不仅无视历史定论，更让美巴两国围绕运河主权归属与通航收费的博弈迅速升温。
+              </p>
+              <p class="text-lg leading-relaxed">
+                此次风波不仅涉及两国利益，更折射出全球地缘政治格局的深刻变化。巴拿马运河作为全球贸易的重要枢纽，其未来走向不仅关系到巴拿马的主权与发展，也将对全球经济与战略平衡产生深远影响。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 巴拿马运河概览 -->
+    <section class="mb-16">
+      <div class="max-w-6xl mx-auto">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="p-6 md:p-8">
+            <h3 class="text-2xl font-bold mb-6 text-primary">巴拿马运河概览</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="stat-card text-white rounded-lg p-6">
+                <div class="text-accent text-4xl mb-3">
+                  <i class="fa fa-globe"></i>
+                </div>
+                <h4 class="text-xl font-semibold mb-2">战略地位</h4>
+                <p class="text-gray-300">连接大西洋与太平洋的咽喉要道，全球约5%的贸易货物通过运河运输</p>
+              </div>
+              
+              <div class="stat-card text-white rounded-lg p-6">
+                <div class="text-accent text-4xl mb-3">
+                  <i class="fa fa-line-chart"></i>
+                </div>
+                <h4 class="text-xl font-semibold mb-2">经济贡献</h4>
+                <p class="text-gray-300">年收入约34.5亿美元，占巴拿马GDP的6%，提供约5.5万个直接就业岗位</p>
+              </div>
+              
+              <div class="stat-card text-white rounded-lg p-6">
+                <div class="text-accent text-4xl mb-3">
+                  <i class="fa fa-clock-o"></i>
+                </div>
+                <h4 class="text-xl font-semibold mb-2">历史沿革</h4>
+                <p class="text-gray-300">1914年开通，美国控制至1999年，现由巴拿马运河管理局运营</p>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- 运河图片 -->
+          <div class="grid grid-cols-1 md:grid-cols-2">
+            <div class="h-64 overflow-hidden">
+              <img src="https://images.pexels.com/photos/2219139/pexels-photo-2219139.jpeg" alt="巴拿马运河全景" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500">
+            </div>
+            <div class="h-64 overflow-hidden">
+              <img src="https://images.pexels.com/photos/2906490/pexels-photo-2906490.jpeg" alt="运河船闸" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500">
+            </div>
+          </div>
+
+          <div class="mt-16">
+
+            <div class="flex flex-col md:flex-row justify-center gap-6 md:gap-8">
+              <!-- 第一个iframe -->
+              <div class="w-full md:w-1/2">
+                <iframe
+                        src="https://dycharts.com/xshow/index.html?id=c_545df500004ce6c867e2c7d9d277bb00"
+                        width="100%"
+                        height="510"
+                        scrolling="no"
+                        frameborder="0"
+                        style="display: block; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                </iframe>
+              </div>
+
+              <!-- 第二个iframe -->
+              <div class="w-full md:w-1/2">
+                <iframe
+                        src="https://dycharts.com/xshow/index.html?id=c_2282dca00898471ccb6fd9f71f47528e"
+                        width="100%"
+                        height="510"
+                        scrolling="no"
+                        frameborder="0"
+                        style="display: block; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                </iframe>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 时间轴部分 -->
+    <section id="timeline" class="mb-16">
+      <h2 class="text-3xl font-bold mb-10 text-primary border-l-4 border-highlight pl-4">事件时间轴回顾</h2>
+
+      <div class="max-w-5xl mx-auto">
+        <div class="relative">
+          <!-- 加粗的时间轴垂直线 -->
+          <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-1 bg-secondary transform md:translate-x-[-0.5px] rounded-full"></div>
+
+          <!-- 2024年事件 -->
+          <div class="relative mb-12">
+            <div class="inline-block bg-primary text-white font-bold py-1 px-4 rounded-full mb-6 mx-auto block text-center w-fit">
+              2024年
+            </div>
+
+            <!-- 12月21日 -->
+            <div class="timeline-item mb-12">
+              <div class="md:flex md:justify-between">
+                <div class="md:w-5/12 md:pr-8 md:text-right mb-4 md:mb-0">
+                  <div class="bg-white rounded-lg shadow-md p-5 card-hover md:ml-auto border-l-4 border-highlight">
+                    <div class="font-semibold text-highlight mb-2">12月21日</div>
+                    <p>特朗普称巴拿马运河是美国资产，指责收费过高并威胁收回，挑战1999年相关条约。</p>
+                  </div>
+                </div>
+                <div class="md:w-5/12 md:pl-8"></div>
+              </div>
+            </div>
+
+            <!-- 12月22日 -->
+            <div class="timeline-item mb-12">
+              <div class="md:flex md:justify-between">
+                <div class="md:w-5/12 md:pr-8"></div>
+                <div class="md:w-5/12 md:pl-8 mb-4 md:mb-0">
+                  <div class="bg-white rounded-lg shadow-md p-5 card-hover border-l-4 border-highlight">
+                    <div class="font-semibold text-highlight mb-2">12月22日</div>
+                    <p>巴拿马总统穆利诺声明运河属巴拿马，主权不容谈判，驳斥特朗普并提及1903年美国获取控制权的历史。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 12月31日 -->
+            <div class="timeline-item">
+              <div class="md:flex md:justify-between">
+                <div class="md:w-5/12 md:pr-8 md:text-right mb-4 md:mb-0">
+                  <div class="bg-white rounded-lg shadow-md p-5 card-hover md:ml-auto border-l-4 border-highlight">
+                    <div class="font-semibold text-highlight mb-2">12月31日</div>
+                    <p>巴拿马纪念收回运河主权25周年，穆利诺强调捍卫主权；次日特朗普再威胁收回。</p>
+                  </div>
+                </div>
+                <div class="md:w-5/12 md:pl-8"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2025年事件 -->
+          <div class="relative">
+            <div class="inline-block bg-primary text-white font-bold py-1 px-4 rounded-full mb-6 mx-auto block text-center w-fit">
+              2025年
+            </div>
+
+            <!-- 1月7日 -->
+            <div class="timeline-item mb-12">
+              <div class="md:flex md:justify-between">
+                <div class="md:w-5/12 md:pr-8"></div>
+                <div class="md:w-5/12 md:pl-8 mb-4 md:mb-0">
+                  <div class="bg-white rounded-lg shadow-md p-5 card-hover border-l-4 border-highlight">
+                    <div class="font-semibold text-highlight mb-2">1月7日</div>
+                    <p>特朗普称不排除用军事力量夺取运河，引发哗然并被批为"新门罗主义"。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2月2日 -->
+            <div class="timeline-item mb-12">
+              <div class="md:flex md:justify-between">
+                <div class="md:w-5/12 md:pr-8 md:text-right mb-4 md:mb-0">
+                  <div class="bg-white rounded-lg shadow-md p-5 card-hover md:ml-auto border-l-4 border-highlight">
+                    <div class="font-semibold text-highlight mb-2">2月2日</div>
+                    <p>美国国务卿称巴拿马同意美军舰免费通行，穆利诺宣布不续签中企"一带一路"协议；运河管理局次日否认免费说法。</p>
+                  </div>
+                </div>
+                <div class="md:w-5/12 md:pl-8"></div>
+              </div>
+            </div>
+
+            <!-- 3月 -->
+            <div class="timeline-item mb-12">
+              <div class="md:flex md:justify-between">
+                <div class="md:w-5/12 md:pr-8"></div>
+                <div class="md:w-5/12 md:pl-8 mb-4 md:mb-0">
+                  <div class="bg-white rounded-lg shadow-md p-5 card-hover border-l-4 border-highlight">
+                    <div class="font-semibold text-highlight mb-2">3月</div>
+                    <p>美国国防部受命提供"军事选择"以确保美国进入运河。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4月26日 -->
+            <div class="timeline-item mb-12">
+              <div class="md:flex md:justify-between">
+                <div class="md:w-5/12 md:pr-8 md:text-right mb-4 md:mb-0">
+                  <div class="bg-white rounded-lg shadow-md p-5 card-hover md:ml-auto border-l-4 border-highlight">
+                    <div class="font-semibold text-highlight mb-2">4月26日</div>
+                    <p>特朗普要求美船（军用、民用）免费过巴拿马运河和苏伊士运河，让鲁比奥处理。</p>
+                  </div>
+                </div>
+                <div class="md:w-5/12 md:pl-8"></div>
+              </div>
+            </div>
+
+            <!-- 5月21日 -->
+            <div class="timeline-item mb-12">
+              <div class="md:flex md:justify-between">
+                <div class="md:w-5/12 md:pr-8"></div>
+                <div class="md:w-5/12 md:pl-8 mb-4 md:mb-0">
+                  <div class="bg-white rounded-lg shadow-md p-5 card-hover border-l-4 border-highlight">
+                    <div class="font-semibold text-highlight mb-2">5月21日</div>
+                    <p>巴拿马副外长在联合国重申运河中立，回应美国特殊权诉求，援引《联合国宪章》呼吁多边主义。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6月10日 -->
+            <div class="timeline-item mb-12">
+              <div class="md:flex md:justify-between">
+                <div class="md:w-5/12 md:pr-8 md:text-right mb-4 md:mb-0">
+                  <div class="bg-white rounded-lg shadow-md p-5 card-hover md:ml-auto border-l-4 border-highlight">
+                    <div class="font-semibold text-highlight mb-2">6月10日</div>
+                    <p>巴拿马运河管理局拒绝美国免费要求，称美船须遵守统一规则，指出免费将冲击财政。</p>
+                  </div>
+                </div>
+                <div class="md:w-5/12 md:pl-8"></div>
+              </div>
+            </div>
+
+            <!-- 7月13日 -->
+            <div class="timeline-item">
+              <div class="md:flex md:justify-between">
+                <div class="md:w-5/12 md:pr-8"></div>
+                <div class="md:w-5/12 md:pl-8 mb-4 md:mb-0">
+                  <div class="bg-white rounded-lg shadow-md p-5 card-hover border-l-4 border-highlight">
+                    <div class="font-semibold text-highlight mb-2">7月13日</div>
+                    <p>美巴在运河区举行联合军演引发主权争议，巴拿马政党谴责其违反1977年相关条约。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 核心矛盾与冲突 -->
+    <section id="conflicts" class="mb-16">
+      <h2 class="text-3xl font-bold mb-8 text-primary border-l-4 border-highlight pl-4">核心矛盾与冲突</h2>
+      
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- 主权归属 -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-primary text-white p-6">
+              <h3 class="text-xl font-bold flex items-center">
+                <i class="fa fa-balance-scale mr-3"></i> 主权归属的根本对立
+              </h3>
+            </div>
+            <div class="p-6">
+              <div class="flex items-start mb-4">
+                <div class="bg-highlight/10 p-3 rounded-lg mr-4">
+                  <i class="fa fa-flag text-highlight text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-highlight mb-1">美方立场</h4>
+                  <p>特朗普称运河是"美国资产"，威胁收回，挑战1999年主权移交条约，共和党推动"回购法案"试图低价"收购"。</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                  <i class="fa fa-flag text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-primary mb-1">巴方立场</h4>
+                  <p>援引条约强调运河"永远属巴拿马"，主权不容谈判，通过联合国、民众抗议捍卫主权。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 经济利益 -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-primary text-white p-6">
+              <h3 class="text-xl font-bold flex items-center">
+                <i class="fa fa-money mr-3"></i> 经济利益的博弈与冲突
+              </h3>
+            </div>
+            <div class="p-6">
+              <div class="flex items-start mb-4">
+                <div class="bg-highlight/10 p-3 rounded-lg mr-4">
+                  <i class="fa fa-usd text-highlight text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-highlight mb-1">美方诉求</h4>
+                  <p>要求美船（军用、民用）免费通行，施压调整收费政策，称可节省巨额费用。</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                  <i class="fa fa-usd text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-primary mb-1">巴方回应</h4>
+                  <p>运河管理局拒绝免费要求，强调统一规则，免费将重创财政。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 军事存在 -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-primary text-white p-6">
+              <h3 class="text-xl font-bold flex items-center">
+                <i class="fa fa-shield mr-3"></i> 军事存在的渗透与反制
+              </h3>
+            </div>
+            <div class="p-6">
+              <div class="flex items-start mb-4">
+                <div class="bg-highlight/10 p-3 rounded-lg mr-4">
+                  <i class="fa fa-university text-highlight text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-highlight mb-1">美方行动</h4>
+                  <p>试图军事收回，通过联合军演（如"泛美演习"）扩大存在，企图借安全协议强化控制。</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                  <i class="fa fa-university text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-primary mb-1">巴方应对</h4>
+                  <p>谴责军演为"变相驻军"，签署协议时删除"永久驻军"条款，要求美方明确承认其主权。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 中国角色 -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-primary text-white p-6">
+              <h3 class="text-xl font-bold flex items-center">
+                <i class="fa fa-globe mr-3"></i> 中国角色与"一带一路"影响
+              </h3>
+            </div>
+            <div class="p-6">
+              <div class="flex items-start mb-4">
+                <div class="bg-highlight/10 p-3 rounded-lg mr-4">
+                  <i class="fa fa-flag text-highlight text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-highlight mb-1">美方态度</h4>
+                  <p>视中国在运河周边投资为"威胁"，施压巴拿马暂停"一带一路"协议，推动美国企业收购中资运营港口。</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start mb-4">
+                <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                  <i class="fa fa-flag text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-primary mb-1">中方回应</h4>
+                  <p>通过监管审查反制，外交支持巴拿马主权，强调尊重中立原则。</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="bg-secondary/10 p-3 rounded-lg mr-4">
+                  <i class="fa fa-flag text-secondary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-secondary mb-1">巴方立场</h4>
+                  <p>迫于美压暂停部分合作，但仍需中国投资（如重启科罗萨尔港），在中美间寻求平衡。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center text-white mb-10 mt-10">
+
+        <h3 class="text-3xl max-w-3xl mx-auto mb-8 leading-relaxed font-bold text-gray-900"> 数据视角下的经济博弈</h3>
+
+        <p class="text-2xl max-w-3xl mx-auto mb-8 leading-relaxed font-bold text-gray-700">除巴拿马运河以外，美方在投资及进出口贸易等方面都更深刻地影响着巴拿马的经济，这使得美方在此次事件中的经济威慑力相当大。</p>
+
+        <iframe src="https://dycharts.com/xshow/index.html?id=c_54ef8f9182fce7e05f47827375303cde" width="600" height="510" style="display: block; margin: 0 auto 2rem;"></iframe>
+
+        <iframe src="https://dycharts.com/xshow/index.html?id=c_9e1f63a2ce03670b36e2d2a9db5f370a" width="600" height="510" style="display: block; margin: 0 auto 2rem;"></iframe>
+
+        <iframe src="https://dycharts.com/xshow/index.html?id=c_cf7df58adb8a9fa8ac0f36598b940659"  width="600" height="510" style="display: block; margin: 0 auto 2rem;"></iframe>
+
+        <h3 class="text-3xl max-w-3xl mx-auto mb-8 leading-relaxed font-bold text-gray-900"> 数据视角下中巴经贸往来</h3>
+
+        <p class="text-2xl max-w-3xl mx-auto mb-8 leading-relaxed font-bold text-gray-700">事实上，自加入“一带一路”以来，中巴两国的经济合作日益密切，创造了良好的经济效益，巴拿马获得了实实在在的好处。</p>
+
+        <iframe src="https://dycharts.com/xshow/index.html?id=c_84bac4bdd371b00a2940557b0640ee32"    width="600" height="510" style="display: block; margin: 0 auto 2rem;"></iframe>
+      </div>
+
+      <div class="mt-16">
+
+        <div class="flex flex-col md:flex-row justify-center gap-6 md:gap-8">
+          <!-- 第一个iframe -->
+          <div class="w-full md:w-1/2">
+            <iframe
+                    src="https://dycharts.com/xshow/index.html?id=c_432ced0b95212665428b7ac74771588c"
+                    width="100%"
+                    height="510"
+                    scrolling="no"
+                    frameborder="0"
+                    style="display: block; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            </iframe>
+          </div>
+
+          <!-- 第二个iframe -->
+          <div class="w-full md:w-1/2">
+            <iframe
+                    src="https://dycharts.com/xshow/index.html?id=c_520af63b046a761122a80c740caf0229"
+                    width="100%"
+                    height="510"
+                    scrolling="no"
+                    frameborder="0"
+                    style="display: block; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- 巴拿马运河视频播放区 -->
+    <section class="mb-16">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold mb-8 text-primary border-l-4 border-highlight pl-4">巴拿马运河AI创意短视频：《霸道顾客的“免费”咖啡》</h2>
+
+        <div class="mt-10 rounded-xl overflow-hidden shadow-xl relative h-[320px] md:h-[400px] xl:h-[500px] mx-auto w-full md:w-4/5 lg:w-3/4" id="darwin-intro">
+          <!-- Bilibili视频播放器 -->
+          <iframe
+                  src="//player.bilibili.com/player.html?isOutside=true&aid=115058717826505&bvid=BV1tceTzvENq&cid=31815107947&p=1&autoplay=0"
+                  scrolling="no"
+                  border="0"
+                  frameborder="no"
+                  framespacing="0"
+                  allowfullscreen="true"
+                  class="w-full h-full rounded-xl"
+          ></iframe>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 悬浮导航球 -->
+    <div class="fixed bottom-24 left-6 z-50">
+      <!-- 返回首页按钮 -->
+      <a href="index.html" class="fixed bottom-24 left-6 w-14 h-14 rounded-full bg-primary text-white shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all duration-300 transform hover:scale-110 z-50">
+        <i class="fa fa-home text-xl"></i>
+      </a>
+    </div>
+
+
+      <!-- 部分观点 -->
+    <section id="opinions" class="mb-16">
+      <h2 class="text-3xl font-bold mb-8 text-primary border-l-4 border-highlight pl-4">各方观点</h2>
+
+      <div class="max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- 巴拿马大学专家 -->
+          <div class="relative group w-full h-64 perspective-1000">
+            <!-- 卡片装饰元素 -->
+            <div class="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+              <div class="absolute -right-10 -top-10 w-20 h-20 bg-primary/5 rounded-full blur-xl transition-all duration-700 group-hover:scale-150 group-hover:opacity-30"></div>
+              <div class="absolute -left-10 -bottom-10 w-20 h-20 bg-secondary/5 rounded-full blur-xl transition-all duration-700 group-hover:scale-150 group-hover:opacity-30"></div>
+            </div>
+
+            <!-- 正面内容 -->
+            <div class="absolute inset-0 bg-white rounded-xl shadow-md p-6 flex flex-col items-center justify-center transition-all duration-500 ease-in-out z-10 ">
+              <h3 class="font-bold text-xl text-primary mb-1 transform transition-transform duration-300 group-hover:scale-105">琼斯·库珀</h3>
+              <p class="text-gray-600 text-center text-sm">巴拿马大学运河和国际关系学院副院长</p>
+              <div class="absolute bottom-3 w-10 h-1 bg-primary/20 rounded-full transition-all duration-500 group-hover:w-20"></div>
+            </div>
+
+            <!-- 背面内容 -->
+            <div class="absolute inset-0 bg-white rounded-xl shadow-xl p-6 flex flex-col justify-between opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 ease-in-out transform group-hover:rotate-y-0 rotate-y-180 z-20">
+              <div class="text-lg italic relative">
+                <div class="absolute -top-2 -left-2 text-4xl text-primary/10">"</div>
+                <p>巴拿马是巴拿马运河的正当主人，美国"收回"巴拿马运河的说法"没有任何法律依据，荒谬至极"。占领巴拿马运河期间，美国获利巨大，而巴拿马获得的利益却微乎其微。</p>
+                <div class="absolute -bottom-2 -right-2 text-4xl text-primary/10">"</div>
+              </div>
+              <div class="text-right">
+                <p class="font-semibold text-primary">琼斯·库珀</p>
+                <p class="text-gray-600 text-sm">巴拿马大学运河和国际关系学院副院长</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 中国外交部 -->
+          <div class="relative group w-full h-64 perspective-1000">
+            <!-- 卡片装饰元素 -->
+            <div class="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+              <div class="absolute -right-10 -top-10 w-20 h-20 bg-primary/5 rounded-full blur-xl transition-all duration-700 group-hover:scale-150 group-hover:opacity-30"></div>
+              <div class="absolute -left-10 -bottom-10 w-20 h-20 bg-secondary/5 rounded-full blur-xl transition-all duration-700 group-hover:scale-150 group-hover:opacity-30"></div>
+            </div>
+
+            <!-- 正面内容 -->
+            <div class="absolute inset-0 bg-primary rounded-xl shadow-md p-6 flex flex-col items-center justify-center transition-all duration-500 ease-in-out z-10">
+              <h3 class="font-bold text-xl text-white mb-1 transform transition-transform duration-300 group-hover:scale-105">林剑</h3>
+              <p class="text-white text-center text-sm">中国外交部发言人</p>
+              <div class="absolute bottom-3 w-10 h-1 bg-primary/20 rounded-full transition-all duration-500 group-hover:w-20"></div>
+            </div>
+
+            <!-- 背面内容 -->
+            <div class="absolute inset-0 bg-white rounded-xl shadow-xl p-6 flex flex-col justify-between opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 ease-in-out transform group-hover:rotate-y-0 rotate-y-180 z-20">
+              <div class="text-lg italic relative">
+                <div class="absolute -top-2 -left-2 text-4xl text-primary/10">"</div>
+                <p>中方对美国通过施压胁迫的手段抹黑破坏共建"一带一路"合作的行径表示坚决反对，对巴方表示不再续签谅解备忘录深表遗憾。"一带一路"是经济合作倡议，成果惠及了包括巴拿马在内的各国民众。</p>
+                <div class="absolute -bottom-2 -right-2 text-4xl text-primary/10">"</div>
+              </div>
+              <div class="text-right">
+                <p class="font-semibold text-primary">林剑</p>
+                <p class="text-gray-600 text-sm">中国外交部发言人</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 国际海事组织 -->
+          <div class="relative group w-full h-64 perspective-1000">
+            <!-- 卡片装饰元素 -->
+            <div class="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+              <div class="absolute -right-10 -top-10 w-20 h-20 bg-primary/5 rounded-full blur-xl transition-all duration-700 group-hover:scale-150 group-hover:opacity-30"></div>
+              <div class="absolute -left-10 -bottom-10 w-20 h-20 bg-secondary/5 rounded-full blur-xl transition-all duration-700 group-hover:scale-150 group-hover:opacity-30"></div>
+            </div>
+
+            <!-- 正面内容 -->
+            <div class="absolute inset-0 bg-primary rounded-xl shadow-md p-6 flex flex-col items-center justify-center transition-all duration-500 ease-in-out z-10">
+              <h3 class="font-bold text-xl text-white mb-1 transform transition-transform duration-300 group-hover:scale-105">多明格斯</h3>
+              <p class="text-white text-center text-sm">联合国国际海事组织秘书长</p>
+              <div class="absolute bottom-3 w-10 h-1 bg-primary/20 rounded-full transition-all duration-500 group-hover:w-20"></div>
+            </div>
+
+            <!-- 背面内容 -->
+            <div class="absolute inset-0 bg-white rounded-xl shadow-xl p-6 flex flex-col justify-between opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 ease-in-out transform group-hover:rotate-y-0 rotate-y-180 z-20">
+              <div class="text-lg italic relative">
+                <div class="absolute -top-2 -left-2 text-4xl text-primary/10">"</div>
+                <p>巴拿马运河未来仍属于巴拿马。</p>
+                <div class="absolute -bottom-2 -right-2 text-4xl text-primary/10">"</div>
+              </div>
+              <div class="text-right">
+                <p class="font-semibold text-primary">多明格斯</p>
+                <p class="text-gray-600 text-sm">合国国际海事组织秘书长</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 美国学者 -->
+          <div class="relative group w-full h-64 perspective-1000">
+            <!-- 卡片装饰元素 -->
+            <div class="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+              <div class="absolute -right-10 -top-10 w-20 h-20 bg-primary/5 rounded-full blur-xl transition-all duration-700 group-hover:scale-150 group-hover:opacity-30"></div>
+              <div class="absolute -left-10 -bottom-10 w-20 h-20 bg-secondary/5 rounded-full blur-xl transition-all duration-700 group-hover:scale-150 group-hover:opacity-30"></div>
+            </div>
+
+            <!-- 正面内容 -->
+            <div class="absolute inset-0 bg-white rounded-xl shadow-md p-6 flex flex-col items-center justify-center transition-all duration-500 ease-in-out z-10">
+              <h3 class="font-bold text-xl text-primary mb-1 transform transition-transform duration-300 group-hover:scale-105">罗伯特·帕特南</h3>
+              <p class="text-gray-600 text-center text-sm">哈佛大学国际关系学教授</p>
+              <div class="absolute bottom-3 w-10 h-1 bg-primary/20 rounded-full transition-all duration-500 group-hover:w-20"></div>
+            </div>
+
+            <!-- 背面内容 -->
+            <div class="absolute inset-0 bg-white rounded-xl shadow-xl p-6 flex flex-col justify-between opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 ease-in-out transform group-hover:rotate-y-0 rotate-y-180 z-20">
+              <div class="text-lg italic relative">
+                <div class="absolute -top-2 -left-2 text-4xl text-primary/10">"</div>
+                <p>特朗普的言论反映了部分美国人对失去全球霸权的焦虑。但试图通过军事手段"收回"运河不仅违反国际法，也将严重损害美国在拉美地区的形象和利益。</p>
+                <div class="absolute -bottom-2 -right-2 text-4xl text-primary/10">"</div>
+              </div>
+              <div class="text-right">
+                <p class="font-semibold text-primary">罗伯特·帕特南</p>
+                <p class="text-gray-600 text-sm">哈佛大学国际关系学教授</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      /* 确保所有现代浏览器都支持变换和过渡 */
+      .transform {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+
+      /* 优化过渡效果 */
+      .transition-all {
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 500ms;
+      }
+
+      /* 定义翻转动画 */
+      .group:hover .rotate-y-180 {
+        -webkit-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+      }
+
+      .group .rotate-y-180 {
+        -webkit-transform: rotateY(180deg);
+        transform: rotateY(180deg);
+      }
+
+      /* 隐藏不可见元素 */
+      .invisible {
+        visibility: hidden;
+      }
+
+      /* 卡片阴影动画 */
+      .group:hover .shadow-md {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      .group .shadow-xl {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      /* 添加景深效果 */
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+
+      /* 音量滑块自定义样式 */
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #284139;
+        cursor: pointer;
+      }
+
+      input[type="range"]::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #284139;
+        cursor: pointer;
+        border: none;
+      }
+
+    </style>
+
+    <!-- 音乐控制球 -->
+    <div id="music-control" class="fixed bottom-6 left-6 z-50 w-12 h-12 rounded-full bg-primary flex items-center justify-center cursor-pointer shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl">
+      <i id="music-icon" class="fa fa-volume-off text-white text-xl"></i>
+    </div>
+
+    <!-- 音量控制滑块 (默认隐藏) -->
+    <div id="volume-slider" class="fixed bottom-20 left-6 z-50 w-12 p-2 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg opacity-0 invisible transition-all duration-300">
+      <input id="volume" type="range" min="0" max="1" step="0.1" value="0.7" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary">
+    </div>
+
+    <!-- 背景音乐 -->
+    <audio id="bg-music" loop>
+      <source src="巴拿马运河bgm.mp3" type="audio/mp3">
+      您的浏览器不支持音频播放。
+    </audio>
+
+        <!-- 运河小游戏 -->  <!-- 修正：补充闭合的`-->
+        <div class="container mx-auto px-4 py-8">
+          <!-- 标题区域 - 保持原有结构 -->
+          <h2 class="text-3xl font-bold mb-8 font-inter text-primary border-l-4 border-highlight pl-4">国际态度拼图游戏：</h2><strong class="text-2xl">游戏说明：尝试将左侧的言论卡片拖拽到右侧相应立场的响应区</strong>
+
+          <!-- 游戏卡片区域 - 调整容器结构 -->
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
+            <div class="p-6">
+              <div class="flex flex-col lg:flex-row gap-6">
+                <!-- 事件卡区域 -->
+                <div class="lg:w-1/3">
+                  <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-4 border border-secondary/30 h-full">
+                    <h3 class="text-lg font-bold text-primary mb-3 flex items-center">
+                      <i class="fa fa-comments-o text-primary mr-2"></i>言论卡片
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-3">
+                      将左侧的言论卡片拖拽到右侧相应立场的响应区。
+                    </p>
+                    <div id="eventCards" class="space-y-2 max-h-[400px] overflow-y-auto pr-2">
+                      <!-- 事件卡将通过JavaScript动态生成 -->
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 响应区和计分板 -->
+                <div class="lg:w-2/3 flex flex-col h-full">
+                  <!-- 响应区 -->
+                  <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-4 mb-4 border border-secondary/30 flex-grow min-h-[320px]">
+                    <h3 class="text-lg font-bold text-primary mb-3 flex items-center">
+                      <i class="fa fa-map-o text-primary mr-2"></i>各方立场响应区
+                    </h3>
+                    <div id="responseZones" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 h-full">
+                      <!-- 响应区将通过JavaScript动态生成 -->
+                    </div>
+                  </div>
+
+                  <!-- 计分板 -->
+                  <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-4 border border-secondary/30">
+                    <h3 class="text-lg font-bold text-primary mb-3 flex items-center">
+                      <i class="fa fa-trophy text-primary mr-2"></i>游戏进度
+                    </h3>
+                    <div class="flex justify-between items-center">
+                      <div class="text-center">
+                        <p class="text-sm text-gray-600">已完成</p>
+                        <p id="completedCount" class="text-2xl font-bold text-primary">0</p>
+                      </div>
+                      <div class="text-center">
+                        <p class="text-sm text-gray-600">总计</p>
+                        <p id="totalCount" class="text-2xl font-bold text-primary">0</p>
+                      </div>
+                      <div class="text-center">
+                        <p class="text-sm text-gray-600">正确率</p>
+                        <p id="accuracyRate" class="text-2xl font-bold text-primary">0%</p>
+                      </div>
+                    </div>
+                    <div class="mt-3">
+                      <button id="resetGame" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fa fa-refresh mr-2"></i>重新开始游戏
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 历史背景区域 - 调整容器结构 -->
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="p-6">
+              <h2 class="text-3xl font-bold mb-6 text-primary">鉴史知今：巴拿马运河的历史背景</h2>
+              <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-4 border border-secondary/30">
+                <h3 class="text-xl font-bold text-primary mb-3">巴拿马运河的建造与控制权变迁</h3>
+                <div class="space-y-4 text-gray-600">
+                  <p>
+                    巴拿马运河的建造是19世纪末至20世纪初的一项伟大工程壮举。最初由法国公司于1881年开始尝试修建，但因技术难题和热带疾病等原因失败。1903年，美国通过《海-布诺-瓦里亚条约》从哥伦比亚手中取得了运河的开凿权和永久控制权。
+                  </p>
+                  <p>
+                    1914年，运河正式通航，极大地缩短了大西洋和太平洋之间的航程。然而，美国对运河区的长期控制引发了巴拿马人民的强烈不满和持续抗争。经过多年谈判，美巴两国于1977年签署了《托里霍斯-卡特条约》，规定运河由美巴共同管理，并于1999年12月31日将全部控制权移交巴拿马。
+                  </p>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                    <div class="bg-primary/5 rounded-lg p-3 border border-primary/20">
+                      <h4 class="font-bold text-primary mb-2">1903年</h4>
+                      <p class="text-sm">美国与巴拿马签署《海-布诺-瓦里亚条约》，获得运河开凿权和永久控制权</p>
+                    </div>
+                    <div class="bg-primary/5 rounded-lg p-3 border border-primary/20">
+                      <h4 class="font-bold text-primary mb-2">1914年</h4>
+                      <p class="text-sm">巴拿马运河正式通航</p>
+                    </div>
+                    <div class="bg-primary/5 rounded-lg p-3 border border-primary/20">
+                      <h4 class="font-bold text-primary mb-2">1999年</h4>
+                      <p class="text-sm">美国将运河全部控制权移交巴拿马</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          <!-- 结果和影响区域 - 调整容器结构 -->
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
+            <div class="p-6">
+              <h2 class="text-3xl font-bold mb-6 text-primary">巴拿马运河回归的历史影响</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-4 border border-secondary/30">
+                  <h3 class="text-xl font-bold text-primary mb-3">对巴拿马的影响</h3>
+                  <p class="text-gray-600 mb-4">
+                    巴拿马运河的回归标志着巴拿马人民长期斗争的胜利，极大地提升了国家主权和民族自豪感。运河收入成为国家经济的重要支柱，推动了基础设施建设和社会发展。
+                  </p>
+                  <ul class="space-y-2 text-gray-600">
+                    <li class="flex items-start">
+                      <i class="fa fa-check-circle text-primary mt-0.5 mr-2"></i>
+                      <span>运河收入占GDP的约6%</span>
+                    </li>
+                    <li class="flex items-start">
+                      <i class="fa fa-check-circle text-primary mt-0.5 mr-2"></i>
+                      <span>带动了港口、物流、金融等相关产业发展</span>
+                    </li>
+                    <li class="flex items-start">
+                      <i class="fa fa-check-circle text-primary mt-0.5 mr-2"></i>
+                      <span>提升了巴拿马在国际事务中的地位</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-4 border border-secondary/30">
+                  <h3 class="text-xl font-bold text-primary mb-3">对国际关系的影响</h3>
+                  <p class="text-gray-600 mb-4">
+                    运河回归改变了美国与巴拿马以及拉美国家的关系模式，体现了国际社会对主权平等原则的尊重。同时，运河的中立地位保障了全球贸易的顺畅进行。
+                  </p>
+                  <ul class="space-y-2 text-gray-600">
+                    <li class="flex items-start">
+                      <i class="fa fa-check-circle text-primary mt-0.5 mr-2"></i>
+                      <span>美巴关系从控制与被控制转向平等合作</span>
+                    </li>
+                    <li class="flex items-start">
+                      <i class="fa fa-check-circle text-primary mt-0.5 mr-2"></i>
+                      <span>拉美国家对美国的离心倾向增强</span>
+                    </li>
+                    <li class="flex items-start">
+                      <i class="fa fa-check-circle text-primary mt-0.5 mr-2"></i>
+                      <span>运河成为全球贸易和战略平衡的重要节点</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        <script>
+          // 游戏数据 - 保持不变
+          const gameData = {
+            positions: [
+              { id: 'usa', name: '美国', color: 'primary', icon: '🇺🇸', keywords: ['免费通行', '军事重返'] },
+              { id: 'panama', name: '巴拿马政府', color: 'secondary', icon: '🇵🇦', keywords: ['主权无价', '规则平等'] },
+              { id: 'china', name: '中国', color: 'highlight', icon: '🇨🇳', keywords: ['尊重主权', '不干涉'] },
+              { id: 'latin', name: '拉美国', color: 'accent', icon: '🌎', keywords: ['支持巴拿马', '反殖民'] },
+              { id: 'international', name: '国际组织', color: 'dark', icon: '⚖️', keywords: ['遵守条约', '中立水道'] },
+              { id: 'people', name: '巴拿马民众', color: 'highlight', icon: '🔥', keywords: ['抗议！', '捍卫主权'] }
+            ],
+            events: [
+              { id: 'e1', text: '美国要“收回”巴拿马运河控制权。', correctPosition: 'usa' },
+              { id: 'e2', text: '巴拿马人会团结起来，捍卫国家和运河的主权。运河是巴拿马的一部分，代表着国家认同。', correctPosition: 'people' },
+              { id: 'e3', text: '“站在巴拿马一边”、“巴拿马运河属于巴拿马人民”', correctPosition: 'latin' },
+              { id: 'e4', text: '共建“一带一路”是一项经济合作倡议，旨在搭建合作平台，促进各国特别是“全球南方”国家实现共同发展，不应该被政治化。', correctPosition: 'china' },
+              { id: 'e5', text: '巴拿马拥有巴拿马运河，其国家主权和独立自主也不容侵犯。', correctPosition: 'china' },
+              { id: 'e6', text: '美国船只，应该被允许免费通过巴拿马运河和苏伊士运河。', correctPosition: 'usa' },
+              { id: 'e7', text: '中方会一如既往地尊重巴拿马对运河的主权，承认运河为永久中立的国际通行水道。', correctPosition: 'china' },
+              { id: 'e8', text: '巴拿马运河是重要的商业通道，受到国际法、《托里霍斯-卡特条约》和《巴拿马运河永久中立和经营条约》的保护。', correctPosition: 'international' },
+              { id: 'e9', text: '巴拿马运河由巴拿马人自主管理，中国并未参与巴拿马运河的运营管理，通行费标准制定程序公开透明，不会给美国船只单独降价。', correctPosition: 'panama' }
+            ]
+          };
+
+          // 游戏状态 - 保持不变
+          let gameState = {
+            droppedEvents: {},
+            correctAnswers: 0,
+            totalAnswers: 0
+          };
+
+          // DOM 加载完成后初始化游戏 - 保持不变
+          document.addEventListener('DOMContentLoaded', () => {
+            initGame();
+            document.getElementById('resetGame').addEventListener('click', resetGame);
+
+            // 窗口大小变化时重新调整高度
+            window.addEventListener('resize', adjustGameHeight);
+            adjustGameHeight();
+          });
+
+          // 调整游戏高度 - 保持不变
+          function adjustGameHeight() {
+            const leftContainer = document.querySelector('.lg\\:w-1\\/3 > div');
+            const rightContainer = document.querySelector('.lg\\:w-2\\/3');
+
+            if (leftContainer && rightContainer && window.innerWidth >= 1024) {
+              const leftHeight = leftContainer.offsetHeight;
+              const scoreboardHeight = document.querySelector('.lg\\:w-2\\/3 > div:last-child').offsetHeight;
+
+              // 设置响应区高度
+              const responseZone = document.querySelector('.lg\\:w-2\\/3 > div:first-child');
+              if (responseZone) {
+                responseZone.style.minHeight = `${leftHeight - scoreboardHeight - 32}px`;
+              }
+            }
+          }
+
+          // 初始化游戏 - 保持不变
+          function initGame() {
+            renderResponseZones();
+            renderEventCards();
+            updateScoreboard();
+            setTimeout(adjustGameHeight, 100);
+          }
+
+          // 渲染响应区 - 保持不变
+          function renderResponseZones() {
+            const responseZonesContainer = document.getElementById('responseZones');
+            responseZonesContainer.innerHTML = '';
+
+            gameData.positions.forEach(position => {
+              const zone = document.createElement('div');
+              zone.id = `zone-${position.id}`;
+              zone.className = `response-zone bg-${position.color}/10 border-2 border-${position.color}/20 hover:bg-${position.color}/20 transition-all duration-300 rounded-lg p-3 h-full flex flex-col`;
+
+              // 构建响应区头部
+              const header = document.createElement('div');
+              header.className = 'flex items-center justify-between mb-2';
+
+              const iconContainer = document.createElement('div');
+              iconContainer.className = 'flex items-center';
+
+              const positionIcon = document.createElement('div');
+              positionIcon.className = `position-icon bg-${position.color} text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold`;
+              positionIcon.textContent = position.icon;
+
+              const positionName = document.createElement('h3');
+              positionName.className = `ml-2 text-sm font-semibold text-${position.color}`;
+              positionName.textContent = position.name;
+
+              iconContainer.appendChild(positionIcon);
+              iconContainer.appendChild(positionName);
+
+              const keywords = document.createElement('div');
+              keywords.className = `text-xs bg-${position.color}/10 px-1.5 py-0.5 rounded-full text-${position.color} font-medium`;
+              keywords.textContent = position.keywords.join(' · ');
+
+              header.appendChild(iconContainer);
+              header.appendChild(keywords);
+
+              // 事件放置区
+              const dropArea = document.createElement('div');
+              dropArea.id = `drop-area-${position.id}`;
+              dropArea.className = 'min-h-[80px] space-y-1.5 p-1.5 rounded-md flex-grow';
+              dropArea.dataset.position = position.id;
+
+              // 设置拖放事件
+              dropArea.addEventListener('dragover', handleDragOver);
+              dropArea.addEventListener('dragleave', handleDragLeave);
+              dropArea.addEventListener('drop', handleDrop);
+
+              zone.appendChild(header);
+              zone.appendChild(dropArea);
+              responseZonesContainer.appendChild(zone);
+            });
+          }
+
+          // 渲染事件卡 - 保持不变
+          function renderEventCards() {
+            const eventCardsContainer = document.getElementById('eventCards');
+            eventCardsContainer.innerHTML = '';
+
+            // 按事件ID排序
+            const sortedEvents = [...gameData.events].sort((a, b) => {
+              const idA = parseInt(a.id.substring(1));
+              const idB = parseInt(b.id.substring(1));
+              return idA - idB;
+            });
+
+            sortedEvents.forEach(event => {
+              const card = document.createElement('div');
+              card.id = `card-${event.id}`;
+              card.className = 'event-card bg-white rounded-lg shadow-sm p-3 cursor-grab hover:shadow-md hover:scale-[1.01] transition-all duration-200 relative';
+              card.draggable = true;
+              card.dataset.eventId = event.id;
+              card.dataset.correctPosition = event.correctPosition;
+
+              const cardNumber = document.createElement('div');
+              cardNumber.className = 'absolute -top-2 -left-2 bg-primary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold';
+              cardNumber.textContent = parseInt(event.id.substring(1));
+
+              const cardContent = document.createElement('p');
+              cardContent.className = 'text-sm text-gray-800';
+              cardContent.textContent = event.text;
+
+              card.appendChild(cardNumber);
+              card.appendChild(cardContent);
+
+              // 设置拖拽事件
+              card.addEventListener('dragstart', handleDragStart);
+              card.addEventListener('dragend', handleDragEnd);
+
+              eventCardsContainer.appendChild(card);
+            });
+
+            // 更新总数
+            document.getElementById('totalCount').textContent = gameData.events.length;
+          }
+
+          // 处理拖拽开始 - 保持不变
+          function handleDragStart(e) {
+            this.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', this.id);
+
+            setTimeout(() => {
+              this.style.display = 'none';
+            }, 0);
+          }
+
+          // 处理拖拽结束 - 保持不变
+          function handleDragEnd() {
+            this.classList.remove('dragging');
+            this.style.display = 'block';
+
+            // 移除所有高亮效果
+            document.querySelectorAll('.response-zone').forEach(zone => {
+              zone.classList.remove('drop-zone-highlight');
+            });
+          }
+
+          // 处理拖拽经过 - 保持不变
+          function handleDragOver(e) {
+            e.preventDefault();
+            this.closest('.response-zone').classList.add('border-primary', 'border-2');
+          }
+
+          // 处理拖拽离开 - 保持不变
+          function handleDragLeave() {
+            this.closest('.response-zone').classList.remove('border-primary', 'border-2');
+          }
+
+          // 处理放置 - 保持不变
+          function handleDrop(e) {
+            e.preventDefault();
+            const cardId = e.dataTransfer.getData('text/plain');
+            const card = document.getElementById(cardId);
+
+            if (card) {
+              const positionId = this.dataset.position;
+              const eventId = card.dataset.eventId;
+
+              // 记录放置结果
+              gameState.droppedEvents[eventId] = {
+                positionId: positionId,
+                isCorrect: positionId === card.dataset.correctPosition
+              };
+
+              // 更新游戏状态
+              updateGameState();
+
+              // 显示放置结果
+              this.appendChild(card);
+
+              // 添加动画效果
+              if (positionId === card.dataset.correctPosition) {
+                card.classList.add('bg-green-50', 'border', 'border-green-200');
+
+                // 创建正确标记
+                const checkMark = document.createElement('span');
+                checkMark.className = 'ml-1.5 text-green-500';
+                checkMark.innerHTML = '<i class="fa fa-check-circle"></i>';
+                card.appendChild(checkMark);
+              } else {
+                card.classList.add('bg-red-50', 'border', 'border-red-200');
+
+                // 创建错误标记
+                const crossMark = document.createElement('span');
+                crossMark.className = 'ml-1.5 text-red-500';
+                crossMark.innerHTML = '<i class="fa fa-times-circle"></i>';
+                card.appendChild(crossMark);
+              }
+
+              // 禁用卡片拖拽
+              card.draggable = false;
+              card.classList.remove('cursor-grab', 'hover:shadow-lg', 'hover:scale-[1.02]');
+              card.classList.add('cursor-not-allowed');
+            }
+
+            // 移除高亮效果
+            this.closest('.response-zone').classList.remove('border-primary', 'border-2');
+          }
+
+          // 更新游戏状态 - 保持不变
+          function updateGameState() {
+            const droppedEvents = Object.values(gameState.droppedEvents);
+            gameState.correctAnswers = droppedEvents.filter(event => event.isCorrect).length;
+            gameState.totalAnswers = droppedEvents.length;
+            updateScoreboard();
+
+            // 检查游戏是否完成
+            if (gameState.totalAnswers === gameData.events.length) {
+              setTimeout(() => {
+                showGameCompletion();
+              }, 500);
+            }
+          }
+
+          // 更新计分板 - 保持不变
+          function updateScoreboard() {
+            document.getElementById('completedCount').textContent = gameState.totalAnswers;
+            const accuracy = gameState.totalAnswers > 0
+                    ? Math.round((gameState.correctAnswers / gameState.totalAnswers) * 100)
+                    : 0;
+            document.getElementById('accuracyRate').textContent = `${accuracy}%`;
+          }
+
+          // 显示游戏完成信息 - 保持不变
+          function showGameCompletion() {
+            const accuracy = Math.round((gameState.correctAnswers / gameState.totalAnswers) * 100);
+            let message = '';
+
+            if (accuracy === 100) {
+              message = '恭喜你！全部正确，你对巴拿马运河历史非常了解！';
+            } else if (accuracy >= 70) {
+              message = '做得很好！你对巴拿马运河历史有相当的了解！';
+            } else {
+              message = '继续学习！你对巴拿马运河历史有了初步了解！';
+            }
+
+            // 创建一个简单的模态框
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
+
+            const modalContent = document.createElement('div');
+            modalContent.className = 'bg-white rounded-xl shadow-xl p-6 max-w-md w-full mx-4 transform transition-all scale-95 opacity-0';
+
+            const title = document.createElement('h2');
+            title.className = 'text-xl font-bold text-primary mb-3 text-center';
+            title.textContent = '游戏完成！';
+
+            const score = document.createElement('p');
+            score.className = 'text-lg text-center mb-3';
+            score.innerHTML = `你的正确率是：<span class="font-bold text-primary">${accuracy}%</span> (${gameState.correctAnswers}/${gameState.totalAnswers})`;
+
+            const messageEl = document.createElement('p');
+            messageEl.className = 'text-sm text-gray-600 text-center mb-4';
+            messageEl.textContent = message;
+
+            const closeButton = document.createElement('button');
+            closeButton.className = 'w-full bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300';
+            closeButton.textContent = '继续探索';
+            closeButton.addEventListener('click', () => {
+              modal.remove();
+            });
+
+            modalContent.appendChild(title);
+            modalContent.appendChild(score);
+            modalContent.appendChild(messageEl);
+            modalContent.appendChild(closeButton);
+            modal.appendChild(modalContent);
+
+            document.body.appendChild(modal);
+
+            // 添加动画效果
+            setTimeout(() => {
+              modalContent.classList.remove('scale-95', 'opacity-0');
+              modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+          }
+
+          // 重置游戏 - 保持不变
+          function resetGame() {
+            // 重置游戏状态
+            gameState = {
+              droppedEvents: {},
+              correctAnswers: 0,
+              totalAnswers: 0
+            };
+
+            // 重新渲染游戏
+            initGame();
+
+            // 添加重置动画效果
+            const gameContainer = document.querySelector('.flex');
+            gameContainer.classList.add('opacity-0', 'scale-95', 'transition-all', 'duration-300');
+
+            setTimeout(() => {
+              gameContainer.classList.remove('opacity-0', 'scale-95');
+            }, 300);
+          }
+        </script>
+
+    <!-- 未来展望 -->
+    <section id="future" class="mb-16">
+      <h2 class="text-3xl font-bold mb-8 text-primary border-l-4 border-highlight pl-4">巴拿马的未来何去何从？</h2>
+
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- 经济升级 -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up">
+            <div class="h-48 bg-secondary/10 flex items-center justify-center overflow-hidden">
+              <i class="fa fa-cogs text-6xl text-primary transform transition-transform duration-500 hover:rotate-12"></i>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-3 text-primary">运河经济升级与风险对冲</h3>
+              <p>升级运河设施、发展绿色航运及周边产业，降低对单一收入依赖，增强经济韧性。</p>
+            </div>
+          </div>
+
+          <!-- 外交策略 -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="100">
+            <div class="h-48 bg-secondary/10 flex items-center justify-center overflow-hidden">
+              <i class="fa fa-handshake-o text-6xl text-primary transform transition-transform duration-500 hover:scale-110"></i>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-3 text-primary">中美博弈中的主权弹性外交</h3>
+              <p>在中美间保持平衡，通过明确协议条款、法律手段和多元合作，保障主权并争取实际利益。</p>
+            </div>
+          </div>
+
+          <!-- 经济支点 -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="200">
+            <div class="h-48 bg-secondary/10 flex items-center justify-center overflow-hidden">
+              <i class="fa fa-pie-chart text-6xl text-primary transform transition-transform duration-500 hover:rotate-360"></i>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-3 text-primary">经济韧性的三大支点建设</h3>
+              <p>依托自贸区升级、能源转型和数字经济，构建多元化经济体系，减少外部依赖。</p>
+            </div>
+          </div>
+
+          <!-- 区域联盟 -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="300">
+            <div class="h-48 bg-secondary/10 flex items-center justify-center overflow-hidden">
+              <i class="fa fa-globe text-6xl text-primary transform transition-transform duration-500 hover:rotate-[-360deg]"></i>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-3 text-primary">区域联盟与规则重塑</h3>
+              <p>深化与拉美及中美洲国家联盟，推动区域物流和贸易规则制定，增强话语权。</p>
+            </div>
+          </div>
+
+          <!-- 社会治理 -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="400">
+            <div class="h-48 bg-secondary/10 flex items-center justify-center overflow-hidden">
+              <i class="fa fa-users text-6xl text-primary transform transition-transform duration-500 hover:scale-110"></i>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-3 text-primary">社会治理的数字化转型</h3>
+              <p>通过数字化提升教育、医疗等民生服务，培养专业人才，巩固社会稳定。</p>
+            </div>
+          </div>
+
+          <!-- 国际合作 -->
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="500">
+            <div class="h-48 bg-secondary/10 flex items-center justify-center overflow-hidden">
+              <i class="fa fa-university text-6xl text-primary transform transition-transform duration-500 hover:scale-110"></i>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-3 text-primary">国际规则与法律保障</h3>
+              <p>通过联合国等国际组织强化运河中立地位的法律保障，建立多边协商机制。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 返回首页和游戏按钮 -->
+      <div class="py-8 md:py-12 relative overflow-hidden bg-white">
+
+
+
+        <div class="container mx-auto px-4 relative z-10">
+          <div class="max-w-4xl mx-auto">
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+              <a href="index.html#panama" class="w-full sm:w-auto min-w-[280px] px-8 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 hover:shadow-lg transition-all duration-300 flex items-center justify-center">
+                <i class="fa fa-home mr-2"></i> 返回首页
+              </a>
+              <a href="巴拿马运河游戏.html" class="w-full sm:w-auto min-w-[280px] px-8 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-accent/90 hover:shadow-lg transition-all duration-300 flex items-center justify-center">
+                <i class="fa fa-gamepad mr-2"></i> 再玩下另一个小游戏
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <script>
+      // 初始化动画效果
+      document.addEventListener('DOMContentLoaded', () => {
+        const animateOnScroll = () => {
+          const elements = document.querySelectorAll('[data-aos]');
+
+          elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+
+            if (elementPosition < windowHeight * 0.85) {
+              element.classList.add('opacity-100', 'translate-y-0');
+              element.classList.remove('opacity-0', 'translate-y-10');
+            }
+          });
+        };
+
+        // 设置初始样式
+        document.querySelectorAll('[data-aos]').forEach(el => {
+          el.classList.add('transition-all', 'duration-700', 'ease-out', 'opacity-0', 'translate-y-10');
+        });
+
+        // 初始检查
+        animateOnScroll();
+
+        // 滚动时检查
+        window.addEventListener('scroll', animateOnScroll);
+      });
+    </script>
+
+</main>
+
+
+  <!-- 页脚 -->
+  <footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4">
+        <!-- 页脚主体内容 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+          <!-- 关于项目 -->
+          <div class="md:col-span-2">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+              <i class="fa fa-ship text-accent mr-2"></i> 巴拿马运河风波
+            </h3>
+            <p class="text-gray-400 max-w-md">
+              深入分析巴拿马运河的历史与现状，呈现这场主权博弈的全貌，探讨中美战略竞争背景下的地缘政治格局演变。
+            </p>
+            <div class="mt-6 flex space-x-4">
+              <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-accent hover:text-white transition-all duration-300">
+                <i class="fa fa-facebook"></i>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-accent hover:text-white transition-all duration-300">
+                <i class="fa fa-twitter"></i>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-accent hover:text-white transition-all duration-300">
+                <i class="fa fa-instagram"></i>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-accent hover:text-white transition-all duration-300">
+                <i class="fa fa-linkedin"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- 快速导航 -->
+          <div>
+            <h3 class="text-lg font-bold mb-4 pb-2 border-b border-gray-800">快速导航</h3>
+            <ul class="space-y-3">
+              <li><a href="#intro" class="text-gray-400 hover:text-accent transition-colors flex items-center">
+                <i class="fa fa-angle-right mr-2 text-xs"></i> 导语
+              </a></li>
+              <li><a href="#timeline" class="text-gray-400 hover:text-accent transition-colors flex items-center">
+                <i class="fa fa-angle-right mr-2 text-xs"></i> 时间轴
+              </a></li>
+              <li><a href="#conflicts" class="text-gray-400 hover:text-accent transition-colors flex items-center">
+                <i class="fa fa-angle-right mr-2 text-xs"></i> 核心矛盾
+              </a></li>
+              <li><a href="#results" class="text-gray-400 hover:text-accent transition-colors flex items-center">
+                <i class="fa fa-angle-right mr-2 text-xs"></i> 结果影响
+              </a></li>
+              <li><a href="#opinions" class="text-gray-400 hover:text-accent transition-colors flex items-center">
+                <i class="fa fa-angle-right mr-2 text-xs"></i> 各方观点
+              </a></li>
+              <li><a href="#future" class="text-gray-400 hover:text-accent transition-colors flex items-center">
+                <i class="fa fa-angle-right mr-2 text-xs"></i> 未来展望
+              </a></li>
+            </ul>
+          </div>
+
+          <!-- 联系信息 -->
+          <div>
+            <h3 class="text-lg font-bold mb-4 pb-2 border-b border-gray-800">联系我们</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <i class="fa fa-envelope text-accent mt-1 mr-3"></i>
+                <span class="text-gray-400">3272065695@qq.com</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fa fa-phone text-accent mt-1 mr-3"></i>
+                <span class="text-gray-400">+86 13392601627</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fa fa-map-marker text-accent mt-1 mr-3"></i>
+                <span class="text-gray-400">广州市天河区黄埔大道西601号</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- 版权信息 -->
+        <div class="border-t border-gray-800 pt-8 mt-8">
+          <p class="text-center text-gray-200 text-sm">
+            © 2025 暨南大学新闻与传播学院一带一路网络传播小组
+          </p>
+          <p class="text-center text-gray-700/50 text-sm mt-2">部分图片素材来自网络，仅供学习交流，无商业用途，可联系网页开发小组删除。</p>
+        </div>
+
+      </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 导航菜单切换
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      const icon = menuBtn.querySelector('i');
+      if (mobileMenu.classList.contains('hidden')) {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      } else {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      }
+    });
+    
+    // 关闭移动菜单当点击导航链接
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        const icon = menuBtn.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      });
+    });
+    
+    // 导航栏滚动效果
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        navbar.classList.add('py-2');
+        navbar.classList.remove('py-3');
+        navbar.classList.add('bg-primary/95');
+        navbar.classList.add('backdrop-blur-sm');
+      } else {
+        navbar.classList.add('py-3');
+        navbar.classList.remove('py-2');
+        navbar.classList.remove('bg-primary/95');
+        navbar.classList.remove('backdrop-blur-sm');
+      }
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // 返回顶部按钮
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        backToTopBtn.classList.remove('opacity-0', 'invisible');
+        backToTopBtn.classList.add('opacity-100', 'visible');
+      } else {
+        backToTopBtn.classList.add('opacity-0', 'invisible');
+        backToTopBtn.classList.remove('opacity-100', 'visible');
+      }
+    });
+    
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // 经济图表
+    const ctx = document.getElementById('economicChart').getContext('2d');
+    const economicChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['运河收入占GDP', '教育医疗投入', '对华出口影响', '科罗萨尔港预期'],
+        datasets: [{
+          label: '经济影响数据（%）',
+          data: [6, 15, -12, 40],
+          backgroundColor: [
+            '#284139',
+            '#809076',
+            '#BB6830',
+            '#F8D794'
+          ],
+          borderColor: [
+            '#284139',
+            '#809076',
+            '#BB6830',
+            '#F8D794'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: '百分比 (%)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) {
+                  label += ': ';
+                }
+                if (context.parsed.y !== null) {
+                  label += context.parsed.y + '%';
+                }
+                return label;
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    // 元素进入视口时的淡入效果
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-10');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('section > div').forEach(section => {
+      section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+      observer.observe(section);
+    });
+    
+    // 游戏按钮点击效果
+    document.querySelector('#future button').addEventListener('click', function() {
+      alert('游戏功能即将上线，敬请期待！');
+    });
+  </script>
+
+
+  <script>
+    // 音乐控制逻辑
+    document.addEventListener('DOMContentLoaded', function() {
+      const musicControl = document.getElementById('music-control');
+      const musicIcon = document.getElementById('music-icon');
+      const volumeSlider = document.getElementById('volume-slider');
+      const volumeControl = document.getElementById('volume');
+      const bgMusic = document.getElementById('bg-music');
+
+      let isPlaying = false;
+      let isSliderVisible = false;
+
+      // 音乐控制点击事件
+      musicControl.addEventListener('click', function() {
+        if (!isPlaying) {
+          // 开始播放音乐
+          bgMusic.play();
+          musicIcon.classList.remove('fa-volume-off');
+          musicIcon.classList.add('fa-volume-up');
+          isPlaying = true;
+        } else {
+          // 暂停播放音乐
+          bgMusic.pause();
+          musicIcon.classList.remove('fa-volume-up');
+          musicIcon.classList.add('fa-volume-off');
+          isPlaying = false;
+        }
+
+        // 切换音量滑块显示状态
+        toggleVolumeSlider();
+      });
+
+      // 音量控制
+      volumeControl.addEventListener('input', function() {
+        bgMusic.volume = this.value;
+      });
+
+      // 切换音量滑块显示状态
+      function toggleVolumeSlider() {
+        if (isSliderVisible) {
+          volumeSlider.classList.add('opacity-0', 'invisible');
+          isSliderVisible = false;
+        } else {
+          volumeSlider.classList.remove('opacity-0', 'invisible');
+          isSliderVisible = true;
+        }
+      }
+
+      // 点击其他区域隐藏音量滑块
+      document.addEventListener('click', function(event) {
+        if (!musicControl.contains(event.target) && !volumeSlider.contains(event.target)) {
+          if (isSliderVisible) {
+            volumeSlider.classList.add('opacity-0', 'invisible');
+            isSliderVisible = false;
+          }
+        }
+      });
+    });
+
+    // 视频播放控制脚本
+    document.addEventListener('DOMContentLoaded', function() {
+      const video = document.getElementById('canalVideo');
+      const playButton = document.getElementById('playButton');
+
+      // 点击播放/暂停视频
+      playButton.addEventListener('click', function() {
+        if (video.paused) {
+          video.play();
+          playButton.style.opacity = '0';
+          playButton.style.pointerEvents = 'none';
+        } else {
+          video.pause();
+          playButton.style.opacity = '1';
+          playButton.style.pointerEvents = 'auto';
+        }
+      });
+
+      // 视频结束时显示播放按钮
+      video.addEventListener('ended', function() {
+        playButton.style.opacity = '1';
+        playButton.style.pointerEvents = 'auto';
+      });
+
+      // 视频暂停时显示播放按钮
+      video.addEventListener('pause', function() {
+        if (!video.ended) {
+          playButton.style.opacity = '1';
+          playButton.style.pointerEvents = 'auto';
+        }
+      });
+
+      // 视频播放时隐藏播放按钮
+      video.addEventListener('play', function() {
+        playButton.style.opacity = '0';
+        playButton.style.pointerEvents = 'none';
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const musicControl = document.getElementById('music-control');
+      const musicIcon = document.getElementById('music-icon');
+      const volumeSlider = document.getElementById('volume-slider');
+      const volumeControl = document.getElementById('volume');
+
+      // 修复点：使用正确的文件名
+      const bgMusic = new Audio("巴拿马运河bgm.mp3");
+      bgMusic.loop = true;
+      bgMusic.volume = 0.7;
+
+      let isPlaying = false;
+      let isSliderVisible = false;
+
+      musicControl.addEventListener('click', function() {
+        if (!isPlaying) {
+          bgMusic.play();
+          musicIcon.classList.remove('fa-volume-off');
+          musicIcon.classList.add('fa-volume-up');
+          isPlaying = true;
+        } else {
+          bgMusic.pause();
+          musicIcon.classList.remove('fa-volume-up');
+          musicIcon.classList.add('fa-volume-off');
+          isPlaying = false;
+        }
+        toggleVolumeSlider();
+      });
+
+      volumeControl.addEventListener('input', function() {
+        bgMusic.volume = this.value;
+      });
+
+      function toggleVolumeSlider() {
+        if (isSliderVisible) {
+          volumeSlider.classList.add('opacity-0', 'invisible');
+          isSliderVisible = false;
+        } else {
+          volumeSlider.classList.remove('opacity-0', 'invisible');
+          isSliderVisible = true;
+        }
+      }
+
+      document.addEventListener('click', function(event) {
+        if (!musicControl.contains(event.target) && !volumeSlider.contains(event.target)) {
+          if (isSliderVisible) {
+            volumeSlider.classList.add('opacity-0', 'invisible');
+            isSliderVisible = false;
+          }
+        }
+      });
+    });
+
+  </script>
+
+
+  </main>
+</body>
+
+</html>

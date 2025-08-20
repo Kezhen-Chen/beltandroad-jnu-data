@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国际关系多米诺骨牌</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#E65C00', // 沙漠橙色
+                        secondary: '#FF9900', // 温暖橙色
+                        accent: '#FF3333', // 警示红色
+                        neutral: '#4D4D4D', // 深灰色
+                        light: '#F5F5DC', // 米白色
+                        success: '#2E8B57', // 森林绿
+                        sand: '#F5DEB3', // 沙色
+                        desert: '#D2B48C', // 沙漠色
+                        dunes: '#DEB887', // 沙丘色
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .domino-shadow {
+                filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .btn-hover {
+                @apply transition-all duration-300 hover:scale-105 hover:shadow-lg;
+            }
+            .floating {
+                animation: float 3s ease-in-out infinite;
+            }
+            .desert-bg {
+                background-image: 
+                    radial-gradient(circle at 10% 20%, rgba(245, 222, 179, 0.5) 0%, rgba(210, 180, 140, 0.3) 90%),
+                    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            }
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+                100% { transform: translateY(0px); }
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-sand/30 to-desert/30 min-h-screen flex flex-col items-center justify-center font-sans desert-bg">
+    <!-- 开始界面 -->
+    <div id="startScreen" class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white bg-opacity-90 p-6 transition-all duration-700">
+        <div class="max-w-2xl w-full bg-light rounded-2xl shadow-2xl p-8 transform transition-all duration-500 hover:shadow-xl border border-desert/30">
+            <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-primary mb-6 text-center">国际关系多米诺骨牌</h1>
+            <div class="flex justify-center mb-6">
+                <div class="w-24 h-24 relative">
+                    <div class="domino absolute w-16 h-8 bg-primary rounded-md transform rotate-0 transition-transform duration-500 origin-bottom-left" style="bottom: 0; left: 0;"></div>
+                    <div class="domino absolute w-16 h-8 bg-secondary rounded-md transform rotate-0 transition-transform duration-500 origin-bottom-left" style="bottom: 0; left: 14px;"></div>
+                    <div class="domino absolute w-16 h-8 bg-accent rounded-md transform rotate-0 transition-transform duration-500 origin-bottom-left" style="bottom: 0; left: 28px;"></div>
+                </div>
+            </div>
+            <div class="mb-8 space-y-4 text-neutral">
+                <p class="text-lg">在这个互动游戏中，你将体验到国际关系中的连锁反应。</p>
+                <p class="text-lg">点击"驱逐中企高管"按钮，观察由此引发的一系列多米诺效应。</p>
+                <p class="text-lg">每张骨牌代表不同层面的影响，从第一反应到国际社会的回应。</p>
+            </div>
+            <div class="flex justify-center">
+                <button id="startButton" class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 flex items-center">
+                    <i class="fa fa-play-circle mr-2"></i> 开始游戏
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏主界面 -->
+    <div id="gameScreen" class="hidden w-full max-w-6xl px-4 py-8 transition-opacity duration-500">
+        <div class="text-center mb-10">
+            <h1 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-primary mb-2">国际关系多米诺骨牌</h1>
+            <p class="text-neutral/70 text-lg">探索尼日尔驱逐中企高管事件的连锁反应</p>
+        </div>
+
+        <div class="relative bg-light rounded-2xl shadow-xl p-8 md:p-12 overflow-hidden mb-8 border border-desert/30">
+            <!-- 地图背景 -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none">
+                <svg viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 简化的非洲地图轮廓 -->
+                    <path d="M200,100 Q300,50 400,100 T600,100 T800,100 Q850,200 800,300 T600,300 T400,300 T200,300 Q150,200 200,100" fill="none" stroke="#4D4D4D" stroke-width="2"/>
+                    <!-- 尼日尔位置标记 -->
+                    <circle cx="500" cy="150" r="15" fill="#E65C00" opacity="0.7"/>
+                    <!-- 简化的沙漠纹理 -->
+                    <path d="M100,200 Q200,180 300,200 T500,200 T700,200 T900,200" fill="none" stroke="#D2B48C" stroke-width="1" stroke-dasharray="5,5"/>
+                    <path d="M100,250 Q200,230 300,250 T500,250 T700,250 T900,250" fill="none" stroke="#D2B48C" stroke-width="1" stroke-dasharray="5,5"/>
+                    <path d="M100,300 Q200,280 300,300 T500,300 T700,300 T900,300" fill="none" stroke="#D2B48C" stroke-width="1" stroke-dasharray="5,5"/>
+                </svg>
+            </div>
+
+            <!-- 触发按钮 -->
+            <div class="absolute top-8 left-8 z-10">
+                <button id="triggerButton" class="bg-accent hover:bg-accent/90 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent/50 flex items-center">
+                    <i class="fa fa-exclamation-triangle mr-2"></i> 驱逐中企高管
+                </button>
+            </div>
+
+            <!-- 大摆锤 -->
+            <div id="pendulum" class="absolute top-20 left-32 w-4 h-60 bg-neutral/80 rounded-t-lg origin-top flex flex-col items-center hidden">
+                <div class="w-12 h-12 bg-accent rounded-full shadow-lg flex items-center justify-center">
+                    <i class="fa fa-bomb text-white text-xl"></i>
+                </div>
+            </div>
+
+            <!-- 多米诺骨牌区域 -->
+            <div id="dominoArea" class="min-h-[500px] flex items-center justify-center relative overflow-x-auto pb-10">
+                <!-- 骨牌将由JS动态生成 -->
+            </div>
+
+            <!-- 一带一路倡议信息 -->
+            <div id="beltAndRoadInfo" class="hidden absolute bottom-12 left-1/2 transform -translate-x-1/2 text-center max-w-3xl w-full p-6 bg-success/10 rounded-xl border border-success/30">
+                <h3 class="text-success font-bold text-xl mb-2">一带一路倡议：促进共同发展</h3>
+                <p class="text-neutral">一带一路倡议为非洲国家提供了基础设施建设、贸易合作和经济发展的机遇。通过平等互利的合作，中非双方实现了共同繁荣。</p>
+                <div class="mt-4 flex justify-center">
+                    <a href="#" class="text-success hover:text-success/80 font-medium flex items-center">
+                        <span>了解更多</span>
+                        <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 说明文字 -->
+            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center text-neutral/60 text-sm">
+                <p>点击按钮，观察连锁反应的展开</p>
+            </div>
+        </div>
+
+        <!-- 游戏控制 -->
+        <div class="flex justify-center space-x-4">
+            <button id="resetButton" class="bg-neutral hover:bg-neutral/90 text-white font-bold py-2 px-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-neutral/50 flex items-center">
+                <i class="fa fa-refresh mr-2"></i> 重新开始
+            </button>
+            <button id="endButton" class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 flex items-center">
+                <i class="fa fa-home mr-2"></i> 返回首页
+            </button>
+        </div>
+    </div>
+
+    <!-- 结束界面 -->
+    <div id="endScreen" class="hidden absolute inset-0 z-50 flex flex-col items-center justify-center bg-white bg-opacity-90 p-6 transition-all duration-700">
+        <div class="max-w-2xl w-full bg-light rounded-2xl shadow-2xl p-8 transform transition-all duration-500 hover:shadow-xl border border-desert/30">
+            <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-primary mb-6 text-center">连锁反应展示完毕</h1>
+            <div class="mb-8 text-center">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-success/10 mb-4">
+                    <i class="fa fa-check text-success text-3xl"></i>
+                </div>
+                <p class="text-lg text-neutral">你已经看到了驱逐中企高管可能引发的一系列连锁反应</p>
+                
+                <!-- 一带一路倡议信息 -->
+                <div class="mt-6 p-4 bg-success/10 rounded-lg border border-success/30">
+                    <h3 class="text-success font-bold mb-2">一带一路倡议：促进共同发展</h3>
+                    <p class="text-neutral text-sm">一带一路倡议为非洲国家提供了基础设施建设、贸易合作和经济发展的机遇。通过平等互利的合作，中非双方实现了共同繁荣。</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="playAgainButton" class="bg-secondary hover:bg-secondary/90 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-secondary/50 flex items-center justify-center">
+                    <i class="fa fa-repeat mr-2"></i> 再玩一次
+                </button>
+                <button id="homeButton" class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 flex items-center justify-center">
+                    <i class="fa fa-home mr-2"></i> 返回首页
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 多米诺骨牌数据
+        const dominos = [
+            {
+                title: "第一反应",
+                content: "中国企业暂停投资",
+                color: "#E65C00", // 沙漠橙色
+                position: { x: 0, y: 0 },
+                rotation: 0
+            },
+            {
+                title: "经济影响",
+                content: "尼日尔财政收入下降20%",
+                color: "#FF9900", // 温暖橙色
+                position: { x: 250, y: 0 },
+                rotation: 0
+            },
+            {
+                title: "社会影响",
+                content: "经济恶化引发抗议增加10%",
+                color: "#FFB366", // 浅橙色
+                position: { x: 500, y: 0 },
+                rotation: 0
+            },
+            {
+                title: "区域影响",
+                content: "尼日尔-贝宁管道项目搁置，持续计提数百万美元的损失",
+                color: "#FFCC99", // 更浅的橙色
+                position: { x: 750, y: 0 },
+                rotation: 0
+            },
+            {
+                title: "国际反应",
+                content: "非洲开发银行重新评估数亿美元的低息贷款",
+                color: "#FFE0B3", // 最浅的橙色
+                position: { x: 1000, y: 0 },
+                rotation: 0
+            }
+        ];
+
+        // DOM 元素
+        const startScreen = document.getElementById('startScreen');
+        const gameScreen = document.getElementById('gameScreen');
+        const endScreen = document.getElementById('endScreen');
+        const startButton = document.getElementById('startButton');
+        const triggerButton = document.getElementById('triggerButton');
+        const resetButton = document.getElementById('resetButton');
+        const endButton = document.getElementById('endButton');
+        const playAgainButton = document.getElementById('playAgainButton');
+        const homeButton = document.getElementById('homeButton');
+        const pendulum = document.getElementById('pendulum');
+        const dominoArea = document.getElementById('dominoArea');
+        const beltAndRoadInfo = document.getElementById('beltAndRoadInfo');
+
+        // 游戏状态
+        let gameActive = false;
+        let fallingDominoIndex = -1;
+
+        // 初始化游戏
+        function initGame() {
+            // 清空多米诺区域
+            dominoArea.innerHTML = '';
+            
+            // 创建多米诺骨牌
+            dominos.forEach((domino, index) => {
+                const dominoElement = document.createElement('div');
+                dominoElement.className = 'domino absolute w-36 h-72 bg-white rounded-md shadow-lg flex flex-col items-center justify-center transition-all duration-500 origin-bottom transform rotate-0 domino-shadow cursor-pointer border-2 border-dunes';
+                dominoElement.style.backgroundColor = domino.color;
+                dominoElement.style.left = `${domino.position.x}px`;
+                dominoElement.style.bottom = `${domino.position.y}px`;
+                dominoElement.dataset.index = index;
+                
+                // 正面内容
+                const frontContent = document.createElement('div');
+                frontContent.className = 'front-content text-center p-4';
+                
+                const title = document.createElement('h3');
+                title.className = 'text-white font-bold text-xl md:text-2xl text-shadow';
+                title.textContent = domino.title;
+                frontContent.appendChild(title);
+                
+                dominoElement.appendChild(frontContent);
+                dominoArea.appendChild(dominoElement);
+                
+                // 创建内容浮层（隐藏状态）
+                const contentOverlay = document.createElement('div');
+                contentOverlay.className = 'content-overlay absolute opacity-0 transition-all duration-500 transform translate-y-8 text-center';
+                contentOverlay.style.left = `${domino.position.x + 90}px`; // 居中
+                contentOverlay.style.bottom = '160px'; // 增加间距
+                contentOverlay.style.width = '240px'; // 增加宽度
+                
+                const content = document.createElement('p');
+                content.className = 'text-neutral font-bold text-xl md:text-2xl p-4 bg-light/95 rounded-lg shadow-lg border border-dunes';
+                content.textContent = domino.content;
+                contentOverlay.appendChild(content);
+                
+                dominoArea.appendChild(contentOverlay);
+            });
+            
+            // 重置游戏状态
+            gameActive = false;
+            fallingDominoIndex = -1;
+            pendulum.classList.add('hidden');
+            beltAndRoadInfo.classList.add('hidden');
+            
+            // 确保滚动到最左侧
+            dominoArea.scrollLeft = 0;
+        }
+
+        // 开始摆锤动画
+        function startPendulum() {
+            pendulum.classList.remove('hidden');
+            pendulum.style.transform = 'rotate(0deg)';
+            
+            // 设置初始角度
+            let angle = -45;
+            pendulum.style.transform = `rotate(${angle}deg)`;
+            
+            // 摆锤动画
+            let increasing = true;
+            let animationId;
+            
+            function swing() {
+                if (angle >= 45) {
+                    increasing = false;
+                } else if (angle <= -45) {
+                    increasing = true;
+                }
+                
+                angle += increasing ? 2 : -2;
+                pendulum.style.transform = `rotate(${angle}deg)`;
+                
+                // 当摆锤到达右侧最大角度时，触发多米诺骨牌
+                if (angle >= 40 && angle <= 45 && fallingDominoIndex === -1) {
+                    fallNextDomino();
+                }
+                
+                if (gameActive) {
+                    animationId = requestAnimationFrame(swing);
+                }
+            }
+            
+            animationId = requestAnimationFrame(swing);
+        }
+
+        // 让下一个多米诺骨牌倒下
+        function fallNextDomino() {
+            fallingDominoIndex++;
+            
+            if (fallingDominoIndex < dominos.length) {
+                const domino = document.querySelector(`.domino[data-index="${fallingDominoIndex}"]`);
+                
+                if (domino) {
+                    // 添加倒下动画
+                    setTimeout(() => {
+                        domino.style.transform = `rotate(90deg)`;
+                        
+                        // 显示内容浮层
+                        setTimeout(() => {
+                            const contentOverlays = domino.parentElement.querySelectorAll('.content-overlay');
+                            if (contentOverlays[fallingDominoIndex]) {
+                                contentOverlays[fallingDominoIndex].style.opacity = '1';
+                                contentOverlays[fallingDominoIndex].style.transform = 'translate-y-0';
+                                
+                                // 平滑滚动到当前骨牌
+                                domino.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                            
+                            // 倒下音效
+                            const audio = new Audio('data:audio/wav;base64,UklGRoQGAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YYAADQ==');
+                            audio.volume = 0.3;
+                            audio.play().catch(e => console.log("音频播放失败:", e));
+                            
+                            // 继续下一个
+                            fallNextDomino();
+                        }, 800);
+                    }, 500);
+                }
+            } else {
+                // 所有骨牌都倒下了，游戏结束
+                setTimeout(() => {
+                    gameActive = false;
+                    // 显示一带一路信息
+                    setTimeout(() => {
+                        beltAndRoadInfo.classList.remove('hidden');
+                        beltAndRoadInfo.classList.add('floating');
+                        
+                        setTimeout(showEndScreen, 3000);
+                    }, 1500);
+                }, 1000);
+            }
+        }
+
+        // 显示开始界面
+        function showStartScreen() {
+            startScreen.classList.remove('hidden');
+            gameScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+        }
+
+        // 显示游戏界面
+        function showGameScreen() {
+            startScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+            endScreen.classList.add('hidden');
+            
+            // 淡入效果
+            gameScreen.style.opacity = '0';
+            setTimeout(() => {
+                gameScreen.style.opacity = '1';
+            }, 100);
+        }
+
+        // 显示结束界面
+        function showEndScreen() {
+            endScreen.classList.remove('hidden');
+            gameScreen.classList.add('hidden');
+            startScreen.classList.add('hidden');
+        }
+
+        // 事件监听
+        startButton.addEventListener('click', () => {
+            showGameScreen();
+            initGame();
+        });
+
+        triggerButton.addEventListener('click', () => {
+            if (!gameActive) {
+                gameActive = true;
+                startPendulum();
+            }
+        });
+
+        resetButton.addEventListener('click', () => {
+            initGame();
+            beltAndRoadInfo.classList.add('hidden');
+        });
+
+        endButton.addEventListener('click', () => {
+            showEndScreen();
+        });
+
+        playAgainButton.addEventListener('click', () => {
+            showGameScreen();
+            initGame();
+        });
+
+        homeButton.addEventListener('click', () => {
+            window.location.href = 'index.html#niger'; // 跳转到首页
+        });
+
+        // 窗口大小变化时重新布局
+        window.addEventListener('resize', () => {
+            if (gameActive) {
+                // 如果游戏正在进行，不重新布局
+                return;
+            }
+            
+            initGame();
+        });
+
+        // 初始化
+        initGame();
+    </script>
+</body>
+</html>
+    

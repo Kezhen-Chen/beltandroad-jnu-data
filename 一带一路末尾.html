@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一带一路倡议 - 合作共赢的新机遇</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0050B3',
+                        secondary: '#154360',
+                        accent: '#F39C12',
+                        neutral: '#F5F7FA',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Noto Serif SC', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                },
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
+            }
+            .backdrop-blur-sm {
+                backdrop-filter: blur(4px);
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .silk-gradient {
+                background: linear-gradient(135deg, #0050B3 0%, #154360 100%);
+            }
+            .timeline-line {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                width: 2px;
+                background-color: #0050B3;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 overflow-x-hidden">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm shadow-md">
+        <div class="container mx-auto px-4">
+            <nav class="flex items-center justify-between h-16 md:h-20">
+                <div class="flex items-center">
+                    <a href="#hero" class="flex items-center">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary flex items-center justify-center mr-3">
+                            <i class="fa fa-globe text-white text-xl md:text-2xl"></i>
+                        </div>
+                        <span class="text-xl md:text-2xl font-bold text-secondary">一带一路</span>
+                    </a>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#achievements" class="text-gray-700 hover:text-primary transition-colors font-medium">多方面成就</a>
+                    <a href="#hegemony" class="text-gray-700 hover:text-primary transition-colors font-medium">霸权机制</a>
+                    <a href="#solutions" class="text-gray-700 hover:text-primary transition-colors font-medium">破局之道</a>
+                    <a href="#future" class="text-gray-700 hover:text-primary transition-colors font-medium">未来展望</a>
+                </div>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-gray-700 hover:text-primary">
+                        <i class="fa fa-bars text-2xl"></i>
+                    </button>
+                </div>
+                
+                <!-- 语言切换按钮 -->
+                <div class="hidden md:block">
+                    <button class="bg-neutral hover:bg-gray-200 text-secondary px-4 py-2 rounded-full transition-colors flex items-center" data-replace="lang-switcher">
+                        <i class="fa fa-language mr-2"></i>
+                        <span>中文</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg absolute w-full">
+            <div class="container mx-auto px-4 py-3 space-y-3">
+                <a href="#achievements" class="block py-2 text-gray-700 hover:text-primary">多方面成就</a>
+                <a href="#hegemony" class="block py-2 text-gray-700 hover:text-primary">霸权机制</a>
+                <a href="#solutions" class="block py-2 text-gray-700 hover:text-primary">破局之道</a>
+                <a href="#future" class="block py-2 text-gray-700 hover:text-primary">未来展望</a>
+                <div class="pt-2 border-t border-gray-200">
+                    <button class="w-full bg-neutral hover:bg-gray-200 text-secondary px-4 py-2 rounded-full transition-colors flex items-center justify-center" data-replace="lang-switcher">
+                        <i class="fa fa-language mr-2"></i>
+                        <span>中文</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section id="hero" class="pt-24 md:pt-32 pb-16 md:pb-24 silk-gradient text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-primary/30 z-0"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight mb-6 text-shadow-lg animate-fade-in">
+                    一带一路倡议
+                </h1>
+                <p class="text-[clamp(1.1rem,2vw,1.5rem)] mb-10 text-white/90 animate-slide-up">
+                    促进共同发展、实现共同繁荣的合作共赢之路
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 animate-slide-up" style="animation-delay: 0.2s">
+                    <a href="#achievements" class="bg-white text-primary hover:bg-opacity-90 px-8 py-3 rounded-full font-medium transition-all transform hover:scale-105 shadow-lg">
+                        了解成就
+                    </a>
+                    <a href="#hegemony" class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-3 rounded-full font-medium transition-all transform hover:scale-105">
+                        挑战与应对
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 装饰元素 -->
+        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
+    </section>
+
+    <!-- 成就部分 -->
+    <section id="achievements" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-16 text-center">多方面成就</h2>
+            
+            <div class="space-y-6">
+                <!-- 政策沟通 -->
+                <div class="bg-neutral rounded-2xl shadow-lg overflow-hidden">
+                    <button class="achievement-toggle w-full flex justify-between items-center p-8 text-left" data-target="policy-content">
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mr-6">
+                                <i class="fa fa-handshake-o text-2xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-secondary">政策沟通与多边合作</h3>
+                                <p class="text-gray-600">点击查看详情</p>
+                            </div>
+                        </div>
+                        <i class="fa fa-chevron-down text-primary transition-transform duration-300"></i>
+                    </button>
+                    <div id="policy-content" class="achievement-content hidden px-8 pb-8">
+                        <p class="mb-4">中国已与152个国家、38个国际组织签署216份共建合作文件，覆盖全球83%主权国家。</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>在联合国层面，"一带一路"倡议连续纳入安理会决议、联大文件及14家联合国机构专项合作</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>区域战略对接扩展至东盟、非盟、欧盟等30余个区域发展规划</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>第三届"一带一路"国际合作高峰论坛有151个国家和41个国际组织的代表参会</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 经贸往来 -->
+                <div class="bg-neutral rounded-2xl shadow-lg overflow-hidden">
+                    <button class="achievement-toggle w-full flex justify-between items-center p-8 text-left" data-target="trade-content">
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mr-6">
+                                <i class="fa fa-exchange text-2xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-secondary">经贸往来</h3>
+                                <p class="text-gray-600">点击查看详情</p>
+                            </div>
+                        </div>
+                        <i class="fa fa-chevron-down text-primary transition-transform duration-300"></i>
+                    </button>
+                    <div id="trade-content" class="achievement-content hidden px-8 pb-8">
+                        <p class="mb-4">2013－2024年，中国与共建国家进出口总额累计突破21万亿美元，年均增长6.4%。</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>与共建国家双向投资累计超过4200亿美元，其中中国对外直接投资达2700亿美元</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>中国民营企业对共建国家进出口总额超过1.8万亿美元，占比58%</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>亚洲基础设施投资银行批准投资项目235个，共投资456亿美元</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 文化教育交流 -->
+                <div class="bg-neutral rounded-2xl shadow-lg overflow-hidden">
+                    <button class="achievement-toggle w-full flex justify-between items-center p-8 text-left" data-target="culture-content">
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mr-6">
+                                <i class="fa fa-book text-2xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-secondary">文化教育交流</h3>
+                                <p class="text-gray-600">点击查看详情</p>
+                            </div>
+                        </div>
+                        <i class="fa fa-chevron-down text-primary transition-transform duration-300"></i>
+                    </button>
+                    <div id="culture-content" class="achievement-content hidden px-8 pb-8">
+                        <p class="mb-4">截至2024年9月末，中国已与148个共建国家签署文化和旅游领域合作文件。</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>成立丝绸之路国际剧院联盟、博物馆联盟等，成员单位增至602家</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>中国院校在135个共建国家设立310所孔子学院、318所孔子课堂</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>76个国家和地区的382家民间组织加入丝绸之路沿线民间组织合作网络</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 霸权机制 -->
+    <section id="hegemony" class="py-20 bg-neutral relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-16 text-center">霸权机制</h2>
+            
+            <div class="text-center mb-12">
+                <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+                    以美国为首的西方势力对"一带一路"实施系统性打压，主要通过以下四个象限展开
+                </p>
+            </div>
+            
+            <!-- 四象限分析 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 政治施压 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 transform transition-all hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fa fa-hand-paper-o text-2xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4">政治施压</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>美国迫使巴拿马终止"一带一路"合作备忘录</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>在尼日尔扶植亲美政权破坏中尼合作</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>将正常商业合作泛政治化</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 经济胁迫 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 transform transition-all hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fa fa-money text-2xl text-orange-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4">经济胁迫</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>澳大利亚强制中企出售达尔文港租约</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>尼日尔强制回购中资项目</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>第三方资本介入替代中资收购</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 军事围堵 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 transform transition-all hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fa fa-shield text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4">军事围堵</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>美军在巴拿马强化军事存在</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>将达尔文港纳入印太战略</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>利用"岛链战略"遏制海上通道</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 舆论攻击 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 transform transition-all hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fa fa-newspaper-o text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-4">舆论攻击</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>发布《债务陷阱地图》歪曲事实</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>将正常劳工纠纷政治化</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>煽动当地民族主义情绪</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 动画区域 -->
+            <div class="mt-20 relative h-80 md:h-96">
+                <div id="hegemony-animation" class="relative w-full h-full">
+                    <!-- 一带一路标志 -->
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 md:w-32 md:h-32 rounded-full bg-primary flex items-center justify-center z-20 animate-pulse-slow">
+                        <i class="fa fa-globe text-white text-4xl md:text-5xl"></i>
+                    </div>
+                    
+                    <!-- 西方势力图标 -->
+                    <div class="hegemon-icon absolute top-0 left-1/2 transform -translate-x-1/2 w-16 h-16 md:w-20 md:h-20 bg-red-500 rounded-full flex items-center justify-center opacity-0 transition-all duration-700" data-direction="north">
+                        <i class="fa fa-hand-paper-o text-white text-2xl"></i>
+                    </div>
+                    <div class="hegemon-icon absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-16 md:w-20 md:h-20 bg-orange-500 rounded-full flex items-center justify-center opacity-0 transition-all duration-700" data-direction="south">
+                        <i class="fa fa-money text-white text-2xl"></i>
+                    </div>
+                    <div class="hegemon-icon absolute top-1/2 left-0 transform -translate-y-1/2 w-16 h-16 md:w-20 md:h-20 bg-blue-500 rounded-full flex items-center justify-center opacity-0 transition-all duration-700" data-direction="west">
+                        <i class="fa fa-shield text-white text-2xl"></i>
+                    </div>
+                    <div class="hegemon-icon absolute top-1/2 right-0 transform -translate-y-1/2 w-16 h-16 md:w-20 md:h-20 bg-purple-500 rounded-full flex items-center justify-center opacity-0 transition-all duration-700" data-direction="east">
+                        <i class="fa fa-newspaper-o text-white text-2xl"></i>
+                    </div>
+                    
+                    <!-- 压迫线条 -->
+                    <div class="absolute top-8 left-1/2 transform -translate-x-1/2 w-0.5 h-20 bg-red-300 opacity-0 transition-all duration-700" data-line="north"></div>
+                    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-0.5 h-20 bg-orange-300 opacity-0 transition-all duration-700" data-line="south"></div>
+                    <div class="absolute top-1/2 left-8 transform -translate-y-1/2 w-20 h-0.5 bg-blue-300 opacity-0 transition-all duration-700" data-line="west"></div>
+                    <div class="absolute top-1/2 right-8 transform -translate-y-1/2 w-20 h-0.5 bg-purple-300 opacity-0 transition-all duration-700" data-line="east"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 破局之道 -->
+    <section id="solutions" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-16 text-center">破局之道</h2>
+            
+            <div class="text-center mb-12">
+                <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+                    面对系统性打压，中国通过五大支柱构建全面应对体系
+                </p>
+            </div>
+            
+            <!-- 五支柱展示 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <!-- 法治坚守 -->
+                <div class="solution-pillar bg-neutral rounded-xl shadow-md overflow-hidden group">
+                    <div class="h-32 bg-primary flex items-center justify-center">
+                        <i class="fa fa-gavel text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-secondary mb-3">法治坚守</h3>
+                        <p class="text-gray-600 text-sm">点击查看详细措施</p>
+                    </div>
+                    <div class="solution-content hidden bg-white p-6 border-t border-gray-200">
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>强调商业合同的合法性，启动国际仲裁</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>通过法律途径索赔，提高违约成本</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>呼吁相关国家遵守契约精神</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 外交斡旋 -->
+                <div class="solution-pillar bg-neutral rounded-xl shadow-md overflow-hidden group">
+                    <div class="h-32 bg-secondary flex items-center justify-center">
+                        <i class="fa fa-globe text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-secondary mb-3">外交斡旋</h3>
+                        <p class="text-gray-600 text-sm">点击查看详细措施</p>
+                    </div>
+                    <div class="solution-content hidden bg-white p-6 border-t border-gray-200">
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>加强双边沟通、积极协调争端</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>在国际平台揭露西方国家的双重标准</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>深化"一带一路"框架下的互利项目</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 战略自主 -->
+                <div class="solution-pillar bg-neutral rounded-xl shadow-md overflow-hidden group">
+                    <div class="h-32 bg-accent flex items-center justify-center">
+                        <i class="fa fa-shield text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-secondary mb-3">战略自主</h3>
+                        <p class="text-gray-600 text-sm">点击查看详细措施</p>
+                    </div>
+                    <div class="solution-content hidden bg-white p-6 border-t border-gray-200">
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>提升军事与政治影响力</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>减少对单一手段依赖，发展多元化合作</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>推动人民币国际化</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 舆论反击 -->
+                <div class="solution-pillar bg-neutral rounded-xl shadow-md overflow-hidden group">
+                    <div class="h-32 bg-red-600 flex items-center justify-center">
+                        <i class="fa fa-bullhorn text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-secondary mb-3">舆论反击</h3>
+                        <p class="text-gray-600 text-sm">点击查看详细措施</p>
+                    </div>
+                    <div class="solution-content hidden bg-white p-6 border-t border-gray-200">
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>揭露美国霸权行径等西方双重标准</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>通过国际媒体争取舆论支持</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>建立国际传播新体系</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 软实力建设 -->
+                <div class="solution-pillar bg-neutral rounded-xl shadow-md overflow-hidden group">
+                    <div class="h-32 bg-green-600 flex items-center justify-center">
+                        <i class="fa fa-graduation-cap text-white text-4xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-secondary mb-3">软实力建设</h3>
+                        <p class="text-gray-600 text-sm">点击查看详细措施</p>
+                    </div>
+                    <div class="solution-content hidden bg-white p-6 border-t border-gray-200">
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>加强文化交流与教育合作</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>推动科技合作与创新交流</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>通过人文交流改善国际形象</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 未来展望 -->
+    <section id="future" class="py-20 bg-secondary text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full">
+                <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="url(#grid)" />
+                <defs>
+                    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5" />
+                    </pattern>
+                </defs>
+            </svg>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center">未来展望</h2>
+            
+            <!-- 双时间轴 -->
+            <div class="relative">
+                <div class="timeline-line hidden md:block"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- 短期挑战 -->
+                    <div class="bg-white/5 backdrop-blur-sm rounded-xl p-8 relative">
+                        <div class="absolute -top-4 -left-4 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-6">短期挑战</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fa fa-arrow-right text-accent mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold mb-1">持续政治化风险</h4>
+                                    <p class="text-white/80 text-sm">西方国家将继续对"一带一路"项目进行政治化操弄，制造舆论压力</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-arrow-right text-accent mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold mb-1">项目推进阻力</h4>
+                                    <p class="text-white/80 text-sm">部分国家可能在美国施压下对合作项目设置障碍，影响项目进度</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-arrow-right text-accent mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold mb-1">安全风险上升</h4>
+                                    <p class="text-white/80 text-sm">地缘政治冲突可能导致部分地区安全环境恶化，威胁人员和资产安全</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 长期机遇 -->
+                    <div class="bg-white/5 backdrop-blur-sm rounded-xl p-8 relative">
+                        <div class="absolute -top-4 -left-4 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                            <i class="fa fa-lightbulb-o"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-6">长期机遇</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fa fa-arrow-right text-accent mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold mb-1">全球南方崛起</h4>
+                                    <p class="text-white/80 text-sm">发展中国家对公平发展模式的需求增长，"一带一路"将获得更广泛支持</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-arrow-right text-accent mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold mb-1">经济结构转型</h4>
+                                    <p class="text-white/80 text-sm">通过互联互通促进产业升级，形成更具韧性的区域产业链</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-arrow-right text-accent mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold mb-1">规则重构机遇</h4>
+                                    <p class="text-white/80 text-sm">推动全球治理体系改革，构建更公平合理的国际规则</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 核心语句动画 -->
+            <div class="mt-20 text-center">
+                <div class="inline-block overflow-hidden">
+                    <h3 id="core-sentence" class="text-[clamp(1.5rem,3vw,2.5rem)] font-serif font-bold tracking-tight opacity-0 transform translate-y-8 transition-all duration-1000">
+                        将主权诉求化作发展杠杆
+                    </h3>
+                </div>
+            </div>
+            
+            <!-- 丝绸之路飘带 -->
+            <div class="mt-16 relative h-24">
+                <svg viewBox="0 0 1000 100" class="w-full h-full">
+                    <path id="silk-road" d="M0,50 Q250,0 500,50 T1000,50" fill="none" stroke="#F39C12" stroke-width="4" stroke-dasharray="10 5" />
+                    <circle cx="0" cy="50" r="8" fill="#F39C12" />
+                    <circle cx="1000" cy="50" r="8" fill="#F39C12" />
+                    <text x="50" y="45" fill="white" font-size="14">历史经验</text>
+                    <text x="920" y="45" fill="white" font-size="14">未来展望</text>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-12 bg-neutral relative">
+        <div class="container mx-auto px-4">
+            <!-- 丝绸飘带分隔线 -->
+            <div class="absolute top-0 left-0 right-0 h-1">
+                <svg viewBox="0 0 1000 1" class="w-full h-full">
+                    <path d="M0,0.5 Q250,1 500,0.5 T1000,0.5" fill="none" stroke="#0050B3" stroke-width="1" />
+                </svg>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center mr-3">
+                            <i class="fa fa-globe text-white text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold text-secondary">一带一路</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mt-2">促进共同发展、实现共同繁荣的合作共赢之路</p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-12">
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3">快速链接</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#achievements" class="text-gray-600 hover:text-primary">多方面成就</a></li>
+                            <li><a href="#hegemony" class="text-gray-600 hover:text-primary">霸权机制</a></li>
+                            <li><a href="#solutions" class="text-gray-600 hover:text-primary">破局之道</a></li>
+                            <li><a href="#future" class="text-gray-600 hover:text-primary">未来展望</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3">相关资源</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 hover:text-primary">政策文件</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-primary">项目案例</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-primary">研究报告</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-primary">新闻资讯</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-600 text-sm mb-4 md:mb-0">© 2025 一带一路倡议. 保留所有权利.</p>
+                
+                <div class="flex space-x-4" data-icon="social-media">
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition-colors">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition-colors">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition-colors">
+                        <i class="fa fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition-colors">
+                        <i class="fa fa-youtube-play"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 图片替换系统 -->
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+                navbar.classList.add('bg-white/95');
+                navbar.classList.remove('bg-white/90');
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.classList.remove('bg-white/95');
+                navbar.classList.add('bg-white/90');
+            }
+        });
+        
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 折叠面板功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 成就部分折叠面板
+            const achievementToggles = document.querySelectorAll('.achievement-toggle');
+            achievementToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const contentId = this.getAttribute('data-target');
+                    const content = document.getElementById(contentId);
+                    const icon = this.querySelector('.fa-chevron-down');
+                    
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                    
+                    // 关闭其他成就面板
+                    achievementToggles.forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            const otherContentId = otherToggle.getAttribute('data-target');
+                            const otherContent = document.getElementById(otherContentId);
+                            const otherIcon = otherToggle.querySelector('.fa-chevron-down');
+                            
+                            if (!otherContent.classList.contains('hidden')) {
+                                otherContent.classList.add('hidden');
+                                otherIcon.classList.remove('rotate-180');
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // 挑战部分折叠面板
+            const challengeToggles = document.querySelectorAll('.challenge-toggle');
+            challengeToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const contentId = this.getAttribute('data-target');
+                    const content = document.getElementById(contentId);
+                    const icon = this.querySelector('.fa-chevron-down');
+                    
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                    
+                    // 关闭其他挑战面板
+                    challengeToggles.forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            const otherContentId = otherToggle.getAttribute('data-target');
+                            const otherContent = document.getElementById(otherContentId);
+                            const otherIcon = otherToggle.querySelector('.fa-chevron-down');
+                            
+                            if (!otherContent.classList.contains('hidden')) {
+                                otherContent.classList.add('hidden');
+                                otherIcon.classList.remove('rotate-180');
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // 破局之道点击展开
+            const solutionPillars = document.querySelectorAll('.solution-pillar');
+            solutionPillars.forEach(pillar => {
+                pillar.addEventListener('click', function() {
+                    const content = this.querySelector('.solution-content');
+                    content.classList.toggle('hidden');
+                    
+                    // 为动画添加过渡效果
+                    if (!content.classList.contains('hidden')) {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    } else {
+                        content.style.maxHeight = '0';
+                    }
+                });
+            });
+            
+            // 霸权机制动画
+            setTimeout(() => {
+                document.querySelectorAll('.hegemon-icon[data-direction="north"]').forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.top = '10%';
+                });
+                document.querySelector('[data-line="north"]').style.opacity = '1';
+                document.querySelector('[data-line="north"]').style.height = 'calc(40% - 16px)';
+                
+                setTimeout(() => {
+                    document.querySelectorAll('.hegemon-icon[data-direction="south"]').forEach(el => {
+                        el.style.opacity = '1';
+                        el.style.bottom = '10%';
+                    });
+                    document.querySelector('[data-line="south"]').style.opacity = '1';
+                    document.querySelector('[data-line="south"]').style.height = 'calc(40% - 16px)';
+                    
+                    setTimeout(() => {
+                        document.querySelectorAll('.hegemon-icon[data-direction="west"]').forEach(el => {
+                            el.style.opacity = '1';
+                            el.style.left = '10%';
+                        });
+                        document.querySelector('[data-line="west"]').style.opacity = '1';
+                        document.querySelector('[data-line="west"]').style.width = 'calc(40% - 16px)';
+                        
+                        setTimeout(() => {
+                            document.querySelectorAll('.hegemon-icon[data-direction="east"]').forEach(el => {
+                                el.style.opacity = '1';
+                                el.style.right = '10%';
+                            });
+                            document.querySelector('[data-line="east"]').style.opacity = '1';
+                            document.querySelector('[data-line="east"]').style.width = 'calc(40% - 16px)';
+                            
+                            // 核心语句动画
+                            setTimeout(() => {
+                                document.getElementById('core-sentence').style.opacity = '1';
+                                document.getElementById('core-sentence').style.transform = 'translateY(0)';
+                            }, 500);
+                            
+                        }, 300);
+                    }, 300);
+                }, 300);
+            }, 500);
+            
+            // 图片替换系统
+            const assetMap = {
+                'darwin-intro': 'real/video.mp4',
+                'niger-desert': 'real/desert.jpg',
+                'panama-map': 'real/canal-map.svg'
+            };
+            
+            document.querySelectorAll('[data-replace]').forEach(el => {
+                const key = el.dataset.replace;
+                if(assetMap[key]) {
+                    if(el.tagName === 'IMG') el.src = assetMap[key];
+                    else if(el.dataset.videoPlaceholder) {
+                        el.innerHTML = `<video src="${assetMap[key]}" controls></video>`;
+                    }
+                }
+            });
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // 关闭移动端菜单
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                    
+                    // 平滑滚动到目标位置
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>    

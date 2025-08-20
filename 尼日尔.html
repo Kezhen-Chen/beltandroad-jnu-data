@@ -1,0 +1,2486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>荒漠回响：尼日尔高管驱逐风波</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sand': '#D2B48C',
+                        'rust': '#B7410E',
+                        'oil': '#1A1A1A',
+                        'deepBrown': '#8B4513',
+                        'pipeline': '#5D4037',
+                        'chinaBlue': '#003366',
+                        'nigerYellow': '#CD853F',
+                        'lightBlue': '#E3F2FD',
+                        'lightOrange': '#FFF3E0'
+                    },
+                    fontFamily: {
+                        'serif': ['"Playfair Display"', 'serif'],
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --desert-yellow: #D2B48C;
+            --oil-black: #1A1A1A;
+            --rust-red: #B7410E;
+            --deep-blue: #003366;
+            --timeline-brown: #5D4037;
+            --alert-red: #E53935;
+            --alert-orange: #FF9800;
+            --alert-yellow: #FFEB3B;
+            --gold: #FFD700;
+            --hope-green: #4CAF50;
+            --risk-gray: #757575;
+            --light-blue: #E3F2FD;
+            --light-orange: #FFF3E0;
+            --china-blue: #003366;
+            --niger-orange: #CD853F;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 悬浮球样式 */
+        .floating-controls {
+            position: fixed;
+            left: 30px;
+            bottom: 30px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .control-ball {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(183, 65, 14, 0.8); /* 使用rust-red色调 */
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+
+        .control-ball:hover {
+            transform: scale(1.1);
+            background: rgba(183, 65, 14, 0.95); /* 悬停时加深颜色 */
+        }
+
+        .control-ball i {
+            font-size: 24px;
+            color: white;
+            z-index: 1000;
+        }
+
+        .music-controls {
+            position: relative;
+            z-index: 1000;
+        }
+
+        .volume-slider-container {
+            position: absolute;
+            left: 70px;
+            bottom: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(-10px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .music-controls:hover .volume-slider-container {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            width: 120px;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffcc70;
+            cursor: pointer;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .floating-controls {
+                left: 15px;
+                bottom: 15px;
+            }
+
+            .control-ball {
+                width: 50px;
+                height: 50px;
+            }
+
+            .volume-slider-container {
+                padding: 10px 15px;
+                left: 60px;
+            }
+
+            .volume-slider {
+                width: 100px;
+            }
+        }
+
+        /* 十字路口部分 */
+        #crossroads {
+            background: linear-gradient(to bottom, #c2b7a3, #b1a897);
+            padding: 150px 5% 100px;
+            position: relative;
+        }
+
+        #crossroads::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1506260408121-e353d10b87c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2128&q=80') no-repeat center center/cover;
+            opacity: 0.05;
+            z-index: 1;
+        }
+
+        .warning-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--rust-red);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .warning-text {
+            max-width: 1000px;
+            margin: 0 auto 80px;
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--oil-black);
+            line-height: 1.5;
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .warning-container {
+            display: flex;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            position: relative;
+            z-index: 2;
+            min-height: 400px;
+        }
+
+        .warning-left {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .warning-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .warning-text-large {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--rust-red);
+            text-align: center;
+            transition: all 1s ease;
+        }
+
+        .word-cloud-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 1s ease;
+        }
+
+        .word-cloud {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            opacity: 1;
+        }
+
+        .cloud-word {
+            margin: 10px 15px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: rgba(183, 65, 14, 0.2);
+            color: var(--oil-black);
+            font-weight: bold;
+            animation: float 6s infinite ease-in-out;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            font-size: 1.5rem;
+        }
+
+        .cloud-word:nth-child(1) { animation-delay: 0s; font-size: 2.8rem; }
+        .cloud-word:nth-child(2) { animation-delay: 0.5s; font-size: 2.5rem; }
+        .cloud-word:nth-child(3) { animation-delay: 1s; font-size: 2.2rem; }
+        .cloud-word:nth-child(4) { animation-delay: 1.5s; font-size: 1.9rem; }
+        .cloud-word:nth-child(5) { animation-delay: 2s; font-size: 1.6rem; }
+        .cloud-word:nth-child(6) { animation-delay: 2.5s; font-size: 1.3rem; }
+        .cloud-word:nth-child(7) { animation-delay: 3s; font-size: 2rem; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(5deg); }
+        }
+
+        .subtitle {
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 60px auto;
+            color: var(--deep-blue);
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .solution-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .solution-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 50px;
+            margin-bottom: 60px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .solution-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--deep-blue);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .solution-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .solution-content p {
+            margin-bottom: 20px;
+        }
+
+        .solution-content strong {
+            color: var(--rust-red);
+        }
+
+        .final-slogan {
+            max-width: 1200px;
+            margin: 100px auto 0;
+            display: flex;
+            gap: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .slogan-part {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--gold);
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+        }
+
+        .slogan-part.left {
+            background: linear-gradient(to right, rgba(0, 51, 102, 0.1), rgba(0, 51, 102, 0.05));
+        }
+
+        .slogan-part.right {
+            background: linear-gradient(to left, rgba(183, 65, 14, 0.1), rgba(183, 65, 14, 0.05));
+        }
+
+
+        /* 词云图容器区域 */
+        .wordcloud-section {
+            margin-top: 20px; /* 与上文的距离 */
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .section-header {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            color: #5a6268;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        /* 词云图容器样式 */
+        .wordcloud-container {
+            position: relative;
+            width: 100%;
+            height: 500px; /* 可根据需要调整高度 */
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .wordcloud-container:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        /* SVG词云图样式 */
+        .wordcloud-svg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .wordcloud-section {
+                margin-top: 50px;
+            }
+
+            .wordcloud-container {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .wordcloud-container {
+                height: 300px;
+                padding: 15px;
+            }
+
+            .wordcloud-section {
+                margin-top: 40px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+
+
+        /* 形势判断部分 */
+        #analysis {
+            background: linear-gradient(to bottom, #d3c9b8, #c2b7a3);
+            padding: 150px 10% 100px;
+            position: relative;
+        }
+
+        #analysis::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80') no-repeat center center/cover;
+            opacity: 0.05;
+            z-index: 1;
+        }
+
+        .risk-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .risk-item {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            position: relative;
+        }
+
+        .risk-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .risk-circle {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            flex-shrink: 0;
+        }
+
+        .risk-1 .risk-circle {
+            background: linear-gradient(135deg, var(--alert-red), #c51162);
+        }
+
+        .risk-2 .risk-circle {
+            background: linear-gradient(135deg, var(--alert-orange), #f57c00);
+        }
+
+        .risk-3 .risk-circle {
+            background: linear-gradient(135deg, var(--alert-yellow), #ffd54f);
+        }
+
+        .risk-circle::before {
+            content: '';
+            position: absolute;
+            inset: 15px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .risk-icon {
+            font-size: 4rem;
+            color: white;
+            margin-bottom: 25px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .risk-3 .risk-icon {
+            color: var(--oil-black);
+        }
+
+        .risk-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: white;
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .risk-3 .risk-title {
+            color: var(--oil-black);
+        }
+
+        .risk-desc {
+            font-size: 1.2rem;
+            color: white;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .risk-3 .risk-desc {
+            color: var(--oil-black);
+        }
+
+        .risk-image-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            flex: 1;
+        }
+
+        .risk-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .risk-image-container:hover .risk-image {
+            transform: scale(1.05);
+        }
+
+        .risk-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 25px;
+        }
+
+        .image-title {
+            font-weight: 700;
+            color: white;
+            margin-bottom: 5px;
+            font-size: 1.4rem;
+        }
+
+        .image-desc {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+
+        .risk-chart {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            margin: 50px auto 0;
+            background: conic-gradient(
+                    var(--alert-red) 0% 30%,
+                    var(--alert-orange) 30% 60%,
+                    var(--alert-yellow) 60% 100%
+            );
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .chart-center {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            color: var(--oil-black);
+            font-size: 1.5rem;
+        }
+
+
+        /* 驱逐原因部分 */
+        #causes {
+            background: linear-gradient(to bottom, #e8dfd1, #d3c9b8);
+            padding: 150px 10% 100px;
+            position: relative;
+        }
+
+        #causes::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1612506001258-0f3b3f9f0c1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            opacity: 0.05;
+            z-index: 1;
+        }
+
+        .causes-container {
+            display: flex;
+            gap: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .causes-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .column-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            position: relative;
+        }
+
+        .column-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        .direct-title {
+            color: var(--deep-blue);
+        }
+
+        .direct-title::after {
+            background: var(--deep-blue);
+        }
+
+        .deep-title {
+            color: var(--rust-red);
+        }
+
+        .deep-title::after {
+            background: var(--rust-red);
+        }
+
+        .cause-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .direct-cause {
+            border-top: 5px solid var(--deep-blue);
+        }
+
+        .deep-cause {
+            border-top: 5px solid var(--rust-red);
+        }
+
+        .cause-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(0, 0, 0, 0.03));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .cause-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .cause-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .cause-icon {
+            font-size: 2.5rem;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .direct-cause .cause-icon {
+            background: rgba(0, 51, 102, 0.1);
+            color: var(--deep-blue);
+        }
+
+        .deep-cause .cause-icon {
+            background: rgba(183, 65, 14, 0.1);
+            color: var(--rust-red);
+        }
+
+        .cause-card:hover .cause-icon {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .cause-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .cause-summary {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .cause-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #666;
+            padding-top: 0;
+        }
+
+        .cause-card:hover .cause-detail {
+            max-height: 300px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        /* 时间线部分 */
+        #timeline {
+            background: linear-gradient(to bottom, #faf5ec, #f0e9dd);
+            padding: 60px 5% 100px;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem; /* 减少标题下方空间 */
+            text-align: center;
+            position: relative;
+            color: var(--oil-black);
+            padding-bottom: 20px;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 150px;
+            height: 5px;
+            background: var(--rust-red);
+            margin: 15px auto;
+            border-radius: 3px;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .legend-china {
+            color: var(--china-blue);
+        }
+
+        .legend-niger {
+            color: var(--niger-orange);
+        }
+
+        .legend-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .legend-china .legend-dot {
+            background: var(--china-blue);
+        }
+
+        .legend-niger .legend-dot {
+            background: var(--niger-orange);
+        }
+
+        .timeline-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            height: 650px;
+        }
+
+        /* 石油管道效果 */
+        .timeline-axis {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 92%;
+            height: 30px;
+            background: var(--oil-black);
+            border-radius: 15px;
+            z-index: 1;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .oil-flow {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.8), transparent);
+            animation: oilFlow 3s linear infinite;
+        }
+
+        @keyframes oilFlow {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .pipe-connectors {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .pipe-connector {
+            width: 40px;
+            height: 40px;
+            background: var(--oil-black);
+            border-radius: 50%;
+            position: relative;
+            z-index: 3;
+        }
+
+        .timeline-items {
+            position: relative;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .timeline-item {
+            width: 16%;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.6s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.8s; }
+        .timeline-item:nth-child(5) { animation-delay: 1.0s; }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--oil-black);
+            border: 5px solid #faf5ec;
+            z-index: 3;
+            box-shadow: 0 0 0 4px rgba(93, 64, 55, 0.3);
+        }
+
+        .timeline-card {
+            position: absolute;
+            width: 100%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            font-size: 1rem;
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .china-card {
+            background: linear-gradient(135deg, #003366, #002244);
+            color: white;
+            bottom: 65%;
+        }
+
+        .niger-card {
+            background: linear-gradient(135deg, #CD853F, #A0522D);
+            color: white;
+            top: 65%;
+        }
+
+        .timeline-phase {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            z-index: 3;
+            color: var(--oil-black);
+            border: 1px solid rgba(93, 64, 55, 0.2);
+        }
+
+        .timeline-date {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: var(--oil-black);
+            font-size: 1.1rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .section-title {
+                font-size: 2.3rem;
+            }
+
+            .timeline-card {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .timeline-container {
+                height: 800px;
+            }
+
+            .timeline-card {
+                width: 90%;
+                left: 5%;
+            }
+
+            .china-card {
+                bottom: auto;
+                top: 30%;
+            }
+
+            .niger-card {
+                top: 70%;
+            }
+
+            .timeline-axis {
+                height: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .timeline-container {
+                height: 1000px;
+            }
+
+            .timeline-items {
+                flex-direction: column;
+                height: auto;
+                gap: 120px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                height: 200px;
+            }
+
+            .timeline-axis {
+                width: 30px;
+                height: 90%;
+                left: 50px;
+                top: 50%;
+            }
+
+            .oil-flow {
+                background: linear-gradient(0deg, transparent, rgba(255, 215, 0, 0.8), transparent);
+                animation: oilFlowVertical 3s linear infinite;
+            }
+
+            @keyframes oilFlowVertical {
+                0% { top: -100%; }
+                100% { top: 100%; }
+            }
+
+            .pipe-connectors {
+                flex-direction: column;
+                height: 100%;
+                width: auto;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .timeline-card {
+                width: 80%;
+                left: 20%;
+            }
+        }
+
+        /* 在现有的 <style> 标签中添加以下按钮样式 */
+        .game-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B2E00, #5D2A2A);
+            color:white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            padding: 1.5rem 2.5rem;
+            border-radius: 50px;
+            box-shadow: 0 8px 20px rgba(183, 65, 14, 0.8);
+            text-decoration: none;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid var(--sand);
+            z-index: 30; /* 确保在粒子层之上 */
+        }
+
+        .game-btn span {
+            position: relative;
+            z-index: 2;
+        }
+
+        .game-btn i {
+            margin-left: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .game-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(183, 65, 14, 0.6);
+        }
+
+        .game-btn:hover i {
+            transform: translateX(5px);
+        }
+
+        /* 按钮动画效果 */
+        .game-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .game-btn:hover::before {
+            left: 100%;
+        }
+
+        /* 底部装饰线 */
+        .btn-underline {
+            width: 0;
+            height: 3px;
+            background: var(--sand);
+            margin: 10px auto 0;
+            transition: width 0.5s ease;
+        }
+
+        .game-btn:hover .btn-underline {
+            width: 80%;
+        }
+
+        /* 沙漠背景上的按钮需要更高对比度 */
+        .bg-sand/10 .game-btn {
+                        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+                    }
+
+
+        /* 按钮容器样式 */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 60px auto 40px;
+            flex-wrap: wrap;
+            z-index: 100000000;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: var(--rust-red);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 250px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            z-index: 100000000;
+        }
+
+        .btn:hover {
+            background-color: #92340b;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:last-child {
+            background-color: var(--deep-blue);
+        }
+
+        .btn:last-child:hover {
+            background-color: #002244;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .button-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .btn {
+                min-width: auto;
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+    </style>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .timeline-line {
+                width: 6px;
+                background-color: #5D4037;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 10;
+            }
+            .timeline-dot {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 3px solid #5D4037;
+                background-color: white;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 20;
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .scroll-indicator {
+                animation: bounce 2s infinite;
+            }
+            @keyframes bounce {
+                0%, 20%, 50%, 80%, 100% {
+                    transform: translateY(0);
+                }
+                40% {
+                    transform: translateY(-20px);
+                }
+                60% {
+                    transform: translateY(-10px);
+                }
+            }
+            .slide-in-left {
+                animation: slideInLeft 1s ease forwards;
+                opacity: 0;
+            }
+            @keyframes slideInLeft {
+                from {
+                    transform: translateX(-50px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            .slide-in-right {
+                animation: slideInRight 1s ease forwards;
+                opacity: 0;
+            }
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(50px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            .fade-in {
+                animation: fadeIn 1s ease forwards;
+                opacity: 0;
+            }
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            .map-pulse {
+                animation: pulse 2s infinite;
+            }
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                50% {
+                    transform: scale(1.2);
+                    opacity: 0.5;
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+            .hourglass-animation {
+                animation: rotate 3s linear infinite;
+            }
+            @keyframes rotate {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(180deg);
+                }
+            }
+            .title-reveal {
+                overflow: hidden;
+                white-space: nowrap;
+                margin: 0 auto;
+                animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+            }
+            @keyframes typing {
+                from {
+                    width: 0;
+                }
+                to {
+                    width: 100%;
+                }
+            }
+            @keyframes blink-caret {
+                from, to {
+                    border-color: transparent;
+                }
+                50% {
+                    border-color: #8B4513;
+                }
+            }
+            .resource-cloud {
+                position: relative;
+                height: 300px;
+            }
+            .resource-cloud span {
+                position: absolute;
+                display: inline-block;
+                opacity: 0;
+                transition: all 0.5s ease;
+            }
+            .resource-cloud span:nth-child(1) {
+                font-size: 2.5rem;
+                top: 40%;
+                left: 50%;
+                transform: translateX(-50%);
+                color: #1A1A1A;
+                animation: fadeInWord 1s 0.5s forwards;
+            }
+            .resource-cloud span:nth-child(2) {
+                font-size: 1.8rem;
+                top: 20%;
+                left: 30%;
+                color: #B7410E;
+                animation: fadeInWord 1s 1s forwards;
+            }
+            .resource-cloud span:nth-child(3) {
+                font-size: 1.8rem;
+                top: 60%;
+                left: 20%;
+                color: #B7410E;
+                animation: fadeInWord 1s 1.2s forwards;
+            }
+            .resource-cloud span:nth-child(4) {
+                font-size: 1.8rem;
+                top: 25%;
+                left: 70%;
+                color: #B7410E;
+                animation: fadeInWord 1s 1.4s forwards;
+            }
+            .resource-cloud span:nth-child(5) {
+                font-size: 1.8rem;
+                top: 65%;
+                left: 75%;
+                color: #B7410E;
+                animation: fadeInWord 1s 1.6s forwards;
+            }
+            @keyframes fadeInWord {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+        /* 事件介绍部分 */
+        #intro {
+            background: linear-gradient(to bottom, #1a2a4d, #3a1c1c);
+            padding-top: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            position: relative;
+        }
+
+        #intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://k.sinaimg.cn/www/dy/slidenews/5_img/2013_10/453_21735_403446.jpg/w640slw.jpg') no-repeat center center/cover;
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        .map-container {
+            width: 95%;
+            max-width: 1200px;
+            height: 500px;
+            background: linear-gradient(to bottom, #1e3c72, #2a5298);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 60px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+
+        .map-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .map-path {
+            fill: #34495e;
+            stroke: #2c3e50;
+            stroke-width: 1;
+            transition: all 0.5s ease;
+        }
+
+        .map-path.africa {
+            fill: #2c3e50;
+        }
+
+        .map-path.niger {
+            fill: var(--desert-yellow);
+            stroke: var(--rust-red);
+            stroke-width: 2;
+        }
+
+        .map-highlight {
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 3;
+            stroke-dasharray: 15,5;
+            animation: dash 5s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes dash {
+            0% {
+                stroke-dashoffset: 1000;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .map-location {
+            fill: var(--rust-red);
+            r: 5;
+            opacity: 0;
+        }
+
+        .poster {
+            width: 100%;
+            max-width: 1000px;
+            height: 350px;
+            background: linear-gradient(135deg, var(--desert-yellow), var(--rust-red));
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 60px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            z-index: 3;
+        }
+
+        .expulsion-notice {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-3deg);
+            width: 450px;
+            height: 280px;
+            background: #fff;
+            padding: 35px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border: 3px solid var(--rust-red);
+            z-index: 50;
+            transition: all 0.5s ease;
+        }
+
+        .expulsion-notice:hover {
+            transform: translate(-50%, -50%) rotate(-3deg) scale(1.03);
+        }
+
+        .expulsion-title {
+            font-weight: 900;
+            color: var(--rust-red);
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            position: relative;
+        }
+
+        .expulsion-title::after {
+            content: '';
+            display: block;
+            width: 120px;
+            height: 3px;
+            background: var(--rust-red);
+            margin: 15px auto;
+        }
+
+        .expulsion-text {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #333;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .suitcase {
+            position: absolute;
+            bottom: 30px;
+            right: 120px;
+            font-size: 3.5rem;
+            color: var(--oil-black);
+            animation: pulse 2s infinite;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .suitcase i {
+            position: relative;
+        }
+
+        .suitcase::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            width: 60px;
+            height: 20px;
+            background: var(--oil-black);
+            border-radius: 4px;
+        }
+
+        .suitcase::after {
+            content: '';
+            position: absolute;
+            bottom: -18px;
+            width: 8px;
+            height: 8px;
+            background: var(--oil-black);
+            border-radius: 50%;
+            left: 15px;
+        }
+
+        .suitcase::after {
+            content: '';
+            position: absolute;
+            bottom: -18px;
+            width: 8px;
+            height: 8px;
+            background: var(--oil-black);
+            border-radius: 50%;
+            right: 15px;
+        }
+
+        .hourglass {
+            position: absolute;
+            top: 30px;
+            left: 120px;
+            font-size: 3rem;
+            color: var(--oil-black);
+            z-index: 3;
+            position: relative;
+            width: 60px;
+            height: 80px;
+        }
+
+        .hourglass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: 30px;
+            background: var(--oil-black);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .hourglass::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 30px;
+            background: var(--oil-black);
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+        }
+
+        .sand {
+            position: absolute;
+            top: 30px;
+            left: 15px;
+            width: 30px;
+            height: 0;
+            background: var(--desert-yellow);
+            animation: sandFlow 6s infinite linear;
+            z-index: 2;
+        }
+
+        @keyframes sandFlow {
+            0% {
+                height: 0;
+            }
+            50% {
+                height: 20px;
+            }
+            100% {
+                height: 0;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .intro-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: #fff;
+            margin-bottom: 40px;
+            text-align: center;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+
+        .event-description {
+            background: rgba(255, 255, 255, 0.92);
+            color: #333;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 900px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            font-size: 1.15rem;
+            line-height: 1.9;
+            z-index: 2;
+        }
+
+        .event-description p {
+            margin-bottom: 25px;
+        }
+
+        .diary-entry {
+            font-style: italic;
+            border-left: 4px solid var(--rust-red);
+            padding-left: 20px;
+            margin: 30px 0;
+            color: #555;
+        }
+
+        .highlight {
+            background: rgba(183, 65, 14, 0.15);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            color: var(--rust-red);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 text-oil overflow-x-hidden">
+    <!-- 风沙粒子特效画布 -->
+    <canvas id="sandParticles" class="fixed top-0 left-0 w-full h-full z-40 pointer-events-none"></canvas>
+    
+    <!-- 导航栏 -->
+    <nav id="main-nav" class="fixed w-full z-50 transition-all duration-300 bg-transparent">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="text-deepBrown font-serif text-2xl font-bold">荒漠回响</div>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-white hover:text-rust transition-colors">返回首页</a>
+                <a href="#timeline" class="text-white hover:text-rust transition-colors">对峙时间线</a>
+                <a href="#reasons" class="text-white hover:text-rust transition-colors">被驱逐原因</a>
+                <a href="#analysis" class="text-white hover:text-rust transition-colors">危机预警</a>
+                <a href="#choice" class="text-white hover:text-rust transition-colors">十字路口</a>
+            </div>
+            <button class="md:hidden text-oil text-xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 事件介绍部分 -->
+    <section id="intro">
+        <h1 class="intro-title">荒漠回响：尼日尔驱逐中企高管风波</h1>
+
+        <div class="poster">
+            <div class="expulsion-notice">
+                <div class="expulsion-title">紧急驱逐通知</div>
+                <div class="expulsion-text">
+                    <strong>Soraz炼厂、CNPC与Wapco中方管理人员<br>
+                        须在48小时内离境</strong><br>
+                    <span style="font-size: 0.9rem; margin-top: 15px; display: block; text-align: right;">2025年3月13日</span>
+                </div>
+            </div>
+            <div class="suitcase">
+                <i class="fas fa-suitcase"></i>
+            </div>
+            <div class="hourglass">
+                <div class="sand"></div>
+            </div>
+        </div>
+
+        <div class="event-description">
+            <p class="diary-entry">2025年3月13日 尼亚美 天气炎热</p>
+            <p>作为西非石油管道公司的中方高管，你清晨仍在监测管道与炼厂数据，一纸驱逐令却骤然降临。烈日下，你看着输油管线沉默，二十多年积累的信任在命令声中瞬间崩塌。</p>
+            <p>2025年3月13日，尼日尔政府以<span class="highlight">"外籍员工与当地工人工资差距过大"</span>为由，驱逐三名中国石油高管；同日，又以<span class="highlight">"歧视性经营"</span>吊销中资阳光国际酒店运营执照。目前国内燃油供应骤减，多地加油站排起长队，经济活动明显受挫，民众生活陷入燃油短缺困境。</p>
+            <p>中国是尼日尔的主要投资来源国，截止2024年末，<span class="highlight">中国对尼日尔直接投资存量为28.68亿美元。</span>目前，在尼日尔的中资企业超50家，主要从事石油开采、铀矿开发、电力通信、土木建筑和酒店餐饮等行业。 在尼日尔投资的中资企业有:中国石油天然气集团(CNPC)、中国核工业集团(CNNC)、中非建材等。主要投资领域包括石油、铀矿、水泥、酒店餐饮等。</p>
+        </div>
+
+        <div class="text-center text-white mb-10 mt-10">
+            <iframe src="https://dycharts.com/xshow/index.html?id=c_9b487170d7dce3b679fc7fa6515c51c6" width="600" height="510" style="display: block; margin: 0 auto 2rem;" ></iframe>
+        </div>
+
+    </section>
+
+
+    <!-- 时间线部分 -->
+    <section id="timeline">
+        <h2 class="section-title">冲突升级：中尼对峙时间线</h2>
+
+        <div class="legend">
+            <div class="legend-item legend-china">
+                <div class="legend-dot"></div>
+                <span>中方行动与立场</span>
+            </div>
+            <div class="legend-item legend-niger">
+                <div class="legend-dot"></div>
+                <span>尼方行动与立场</span>
+            </div>
+        </div>
+
+        <div class="timeline-container">
+            <div class="timeline-axis">
+                <div class="oil-flow"></div>
+            </div>
+
+            <div class="pipe-connectors">
+                <div class="pipe-connector"></div>
+                <div class="pipe-connector"></div>
+                <div class="pipe-connector"></div>
+                <div class="pipe-connector"></div>
+                <div class="pipe-connector"></div>
+            </div>
+
+            <div class="timeline-items">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card china-card">
+                        <span class="timeline-date">2003-2025年</span>
+                        中石油累计投资<span class="highlight">46-60亿美元</span>建设油田/炼厂/管道
+                    </div>
+                    <div class="timeline-card niger-card">
+                        <span class="timeline-date">2023年7月后</span>
+                        军政府推行“资源主权觉醒”政策，强化油气矿控制
+                    </div>
+                    <div class="timeline-phase">合作基础</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card china-card">
+                        <span class="timeline-date">2024年3月</span>
+                        签署4亿美元预付款形式贷款
+                    </div>
+                    <div class="timeline-card niger-card">
+                        <span class="timeline-date">2024年</span>
+                        持续高压审查外资，强化资源管控
+                    </div>
+                    <div class="timeline-phase">发展</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card china-card">
+                        <span class="timeline-date">2025年3月初</span>
+                        拒绝尼方新贷款要求
+                    </div>
+                    <div class="timeline-card niger-card">
+                        <span class="timeline-date">2025年3月初</span>
+                        向中尼炼厂追缴税款，新贷被拒后发生对峙
+                    </div>
+                    <div class="timeline-phase">危机爆发</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card china-card">
+                        <span class="timeline-date">2025年3月13</span>
+                        遭到尼方驱逐
+                    </div>
+                    <div class="timeline-card niger-card">
+                        <span class="timeline-date">2025年3月13</span>
+                        下令中方管理团队48小时内离境，驱逐3名高管，吊销中资酒店执照
+                    </div>
+                    <div class="timeline-phase">危机升级</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card china-card">
+                        <span class="timeline-date">2025年6月</span>
+                        外交部部长王毅呼吁尼日尔通过对话对话方式解决与中国企业的争议
+                    </div>
+                    <div class="timeline-card niger-card">
+                        <span class="timeline-date">2025年5月20日</span>
+                        尼日尔石油部长奥马鲁致信中石油CEO拒绝会谈
+                    </div>
+                    <div class="timeline-phase">后续</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 被驱逐原因 -->
+    <section id="reasons" class="py-20 bg-oil text-white">
+
+        <div class="causes-container">
+            <div class="causes-column">
+                <div class="column-title direct-title">直接原因</div>
+                <div class="cause-card direct-cause">
+                    <div class="cause-header">
+                        <div class="cause-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h3 class="cause-title">贷款拒绝</h3>
+                    </div>
+                    <p class="cause-summary">尼政府要求新贷款遭中石油拒绝</p>
+                    <div class="cause-detail">
+                        <p>尼日尔政府因财政压力要求中石油提供新贷款支持，但拒绝提供任何抵押担保。中石油基于商业合规原则拒绝此要求，成为驱逐事件的直接导火索。</p>
+                    </div>
+                </div>
+
+                <div class="cause-card direct-cause">
+                    <div class="cause-header">
+                        <div class="cause-icon">
+                            <i class="fas fa-hard-hat"></i>
+                        </div>
+                        <h3 class="cause-title">劳工纠纷</h3>
+                    </div>
+                    <p class="cause-summary">指控本地员工薪资不达标</p>
+                    <div class="cause-detail">
+                        <p>尼方指控中企存在“加班频繁”及“本地员工薪资远低于外籍员工”等问题。尼方表示，中方外籍员工月薪约 8,678 美元，而本地员工同岗仅约 1,200 美元，薪资差距约 7 倍。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="causes-column">
+                <div class="column-title deep-title">深层动因</div>
+                <div class="cause-card deep-cause">
+                    <div class="cause-header">
+                        <div class="cause-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <h3 class="cause-title">政治博弈</h3>
+                    </div>
+                    <p class="cause-summary">军政府亟需通过外资审查树立权威</p>
+                    <div class="cause-detail">
+                        <p>2023年政变上台的军政府面临国际制裁压力，亟需通过"强硬外资审查"展现主权立场。中资企业成为转移国内矛盾的政治牺牲品，驱逐行动获得国内民族主义者支持。</p>
+                    </div>
+                </div>
+
+                <div class="cause-card deep-cause">
+                    <div class="cause-header">
+                        <div class="cause-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h3 class="cause-title">舆论影响</h3>
+                    </div>
+                    <p class="cause-summary">西方舆论渲染"中国债务陷阱"</p>
+                    <div class="cause-detail">
+                        <p>西方媒体对中国基础设施贷款在非洲的模式，特别是“中国债务陷阱”概念进行了广泛宣传，尤其聚焦于中资主导的大型项目。尽管学术界已质疑该论调缺乏严谨证据，并强调重新谈判机制和贷款透明度，但在尼日尔社会与政治语境中，这一叙事已蔓延成为推动军政府强化外资审查的舆论背景之一</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 形势判断部分 -->
+    <section id="analysis">
+        <h2 class="section-title">三重风险：驱逐中企高管的连锁反应</h2>
+
+        <div class="risk-container">
+            <div class="risk-item risk-1">
+                <div class="risk-circle">
+                    <div class="risk-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <h3 class="risk-title">战略误判风险</h3>
+                    <p class="risk-desc">尼日尔驱逐中资高管及加重税负已影响石油项目正常运转，且短期内难以找到具备同等资金与技术能力的替代投资者。若局势继续恶化，将面临出口下降、财政收入短缺等重大风险。</p>
+                </div>
+                <div class="risk-image-container">
+                    <img src="加油站队长.webp" alt="燃油短缺" class="risk-image">
+                    <div class="risk-overlay">
+                        <div class="image-title">加油站长队</div>
+                        <div class="image-desc">驱逐事件导致尼日尔国内燃油供应骤减</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="risk-item risk-2">
+                <div class="risk-image-container">
+                    <img src="https://res2.hnrbi.com/upload/wlgc/20190409/2019DIQSb0BoZL.jpg" alt="铁路建设" class="risk-image">
+                    <div class="risk-overlay">
+                        <div class="image-title">尼日尔大桥</div>
+                        <div class="image-desc">中国承建的现代化交通节点</div>
+                    </div>
+                </div>
+                <div class="risk-circle">
+                    <div class="risk-icon"><i class="fas fa-road-bridge"></i></div>
+                    <h3 class="risk-title">基础设施中断风险</h3>
+                    <p class="risk-desc">中国承建的塔瓦—津德尔铁路和尼亚美大桥等现代化交通节点若因中尼关系恶化停滞，将使物流成本激增，加剧内陆国地理劣势，对经济造成严重制约。</p>
+                </div>
+            </div>
+
+            <div class="risk-item risk-3">
+                <div class="risk-circle">
+                    <div class="risk-icon"><i class="fas fa-plane-departure"></i></div>
+                    <h3 class="risk-title">外资撤离风险</h3>
+                    <p class="risk-desc">若外交不稳导致外资撤出，尼日尔将失去资源开发能力，丰富的铀矿和石油资源可能无法转化为经济动力，陷入“资源丰富但缺乏产业”困境。</p>
+                </div>
+                <div class="risk-image-container">
+                    <img src="外资逃离尼日尔.png" alt="铀矿开发" class="risk-image">
+                    <div class="risk-overlay">
+                        <div class="image-title">外资逃离</div>
+                        <div class="image-desc">外资在尼日尔国民经济中发挥重要作用</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </section>
+
+    <!-- 游戏 -->
+    <section class="py-16 bg-sand/90 relative z-30">
+
+        <div class="mb-16 z-1000">
+            <p class="text-2xl max-w-3xl mx-auto mb-8 leading-relaxed font-bold text-gray-900">尼日尔的经济基础薄弱，与非洲其他国家相比，其经济状况指数长期处于低位。在七个具体维度中，除了经济产出能力，其余各项指数得分均低于非洲平均水平。这种脆弱性意味着，驱逐中企高管可能使尼日尔陷入连锁危机，带来战略误判、基础设施中断和外资撤离等多重风险。</p>
+
+            <div class="flex flex-col md:flex-row justify-center gap-6 md:gap-8">
+                <!-- 第一个iframe -->
+                <div class="w-full md:w-1/2">
+                    <iframe
+                            src="https://dycharts.com/xshow/index.html?id=c_461a0ee8dc407d5f9e880fee50f9cd54"
+                            width="80%"
+                            height="510"
+                            scrolling="no"
+                            frameborder="0"
+                            style="display: block; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    </iframe>
+                </div>
+
+                <!-- 第二个iframe -->
+                <div class="w-full md:w-1/2">
+                    <iframe
+                            src="https://dycharts.com/xshow/index.html?id=c_13582076e9221472e233dce4281451c0"
+                            width="80%"
+                            height="510"
+                            scrolling="no"
+                            frameborder="0"
+                            style="display: block; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    </iframe>
+                </div>
+            </div>
+
+            <p class="text-2xl max-w-3xl mx-auto mb-8 mt-8 leading-relaxed font-bold text-gray-900">尼日尔与许多国家的贸易往来都呈现逆差格局，而对中国的逆差尤为突出。2019–2023年间，尼日尔对华贸易逆差始终超过250万美元，其中2021年和2022年分别达到490万和532万美元。这种持续的不平衡加深了尼日尔对中国市场的依赖，也让驱逐中企高管的决定可能引发难以忽视的经济风险。</p>
+
+            <iframe src="https://dycharts.com/xshow/index.html?id=c_ba114abb12740583e5b4f2b8999af12f" width="600" height="510" style="display: block; margin: 0 auto 2rem;"></iframe>
+
+            <p class="text-2xl max-w-3xl mx-auto mb-8 leading-relaxed font-bold text-gray-900">尼日尔的GDP年增长率波动较大，经济走势不稳定。同时，自2020年起，尼日尔的外国直接投资净额持续下降。在这种情况下，尼日尔恐难以承受外资进一步撤出的风险。</p>
+
+            <iframe src="https://dycharts.com/xshow/index.html?id=c_a58fc7b6d2ca8493b3d1fb22d11e5886" width="600" height="510" style="display: block; margin: 0 auto 2rem;"></iframe>
+
+            <p class="text-2xl max-w-3xl mx-auto mb-8 leading-relaxed font-bold text-gray-900">2024年1月至2025年4月以来，尼日尔的原油产量增速持续放缓。这意味着原油并未形成强劲的产出保障，导致国内燃油供应问题在危机中被进一步放大。</p>
+
+            <iframe src="https://dycharts.com/xshow/index.html?id=c_757a4a8e5c34ad8896a5fc6a1e4deb05" width="600" height="510" style="display: block; margin: 0 auto 2rem;"></iframe>
+
+        </div>
+
+        <div class="container mx-auto px-4 text-center">
+            <a href="尼日尔游戏.html"
+               class="game-btn">
+                <div class="flex items-center justify-center">
+                    <span>点击玩个小游戏，了解驱逐中资的连锁反应</span>
+                    <i class="fa fa-gamepad ml-4"></i>
+                </div>
+                <div class="btn-underline"></div>
+            </a>
+
+            <!-- 小游戏说明 -->
+            <p class="mt-8 text-deepBrown/80 max-w-2xl mx-auto text-lg italic">
+                通过互动游戏体验驱逐中企高管后可能的连锁反应，理解尼日尔面临的外交挑战
+            </p>
+
+            <!-- 装饰性元素 -->
+            <div class="mt-10 flex justify-center space-x-6">
+                <div class="w-4 h-4 bg-rust rounded-full"></div>
+                <div class="w-4 h-4 bg-deepBrown rounded-full"></div>
+                <div class="w-4 h-4 bg-sand rounded-full"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 词云图容器区域 -->
+    <section class="wordcloud-section">
+        <div class="section-header">
+            <h3 class="section-title">关键风险点</h3>
+        </div>
+
+        <div class="wordcloud-container">
+            <!-- 直接引入SVG词云图 -->
+            <img src="wordcloud1.gif" alt="关键词词云图" class="wordcloud-svg">
+        </div>
+    </section>
+
+
+
+    <!-- 十字路口 -->
+    <section id="choice" class="py-20 bg-oil text-white relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <h2 class="section-title">尼日尔的抉择：资源荒漠还是发展杠杆？</h2>
+
+            <div class="warning-title">尼日尔面临抉择</div>
+            <div class="warning-text">
+                如果尼日尔继续凭激情敌视外资，必将陷入资源荒漠与国际孤立的不归路。
+            </div>
+
+            <div class="subtitle">不如握紧手中油铀筹码——</div>
+
+            <div class="solution-container">
+                <div class="solution-card">
+                    <div class="solution-title"><i class="fas fa-hands-helping"></i> 以油气为枢纽推动区域合作</div>
+                    <div class="solution-content">
+                        <p>建议合理利用中国“一带一路”和非洲自贸区机遇，以津德尔炼油厂为核心，建设尼日尔—贝宁—尼日利亚跨国石化走廊，提升当地经济活力，并吸引中东资本共建储运基地，将地理劣势转化为区域贸易枢纽优势，提升国际市场地位。</p>
+                    </div>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-title"><i class="fas fa-chess-knight"></i> 主权诉求的转化路径</div>
+                    <div class="solution-content">
+                        <p>尼日尔的困境源于“反殖民”激情与“后殖民”现实的撕裂。与其盲目驱逐外国资本，不如以资源为筹码构建多元合作网络，将主权诉求转化为发展杠杆，使每吨铀矿、每桶石油都成为国民尊严的基石。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 背景装饰 -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-20">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full">
+                <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="#D2B48C" stroke-width="0.5"/>
+                <path d="M0,20 L100,80" fill="none" stroke="#D2B48C" stroke-width="0.5"/>
+                <path d="M0,40 L100,60" fill="none" stroke="#D2B48C" stroke-width="0.5"/>
+                <path d="M0,60 L100,40" fill="none" stroke="#D2B48C" stroke-width="0.5"/>
+                <path d="M0,80 L100,20" fill="none" stroke="#D2B48C" stroke-width="0.5"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- 在 <section id="crisis"> 之后插入以下代码 -->
+    <section id="video-case" class="py-20 bg-deepBrown text-white">
+        <div class="container mx-auto px-4">
+            <h2 class="font-serif text-[clamp(1.8rem,4vw,2.5rem)] text-sand font-bold text-center mb-16">
+                AI创意短视频：《尼日尔的抉择》
+            </h2>
+
+            <div class="mt-10 rounded-xl overflow-hidden shadow-xl relative h-[320px] md:h-[400px] xl:h-[500px] mx-auto w-full md:w-4/5 lg:w-3/4" id="darwin-intro">
+                <!-- Bilibili视频播放器 -->
+                <iframe
+                        src="//player.bilibili.com/player.html?isOutside=true&aid=115058734537953&bvid=BV1MFeTzKELq&cid=31815239671&p=1&autoplay=0"
+                        scrolling="no"
+                        border="0"
+                        frameborder="no"
+                        framespacing="0"
+                        allowfullscreen="true"
+                        class="w-full h-full rounded-xl"
+                ></iframe>
+            </div>
+
+        </div>
+
+        <div class="button-container">
+            <button class="btn" onclick="window.location.href='index.html#niger'">返回首页了解下一个事件</button>
+            <a href="尼日尔游戏.html" class="btn">再玩一遍小游戏</a>
+        </div>
+
+    </section>
+
+    <!-- 悬浮控制球 -->
+    <div class="floating-controls">
+        <!-- 导航球 - 返回首页 -->
+        <a href="index.html" class="control-ball nav-ball">
+            <i class="fas fa-home"></i>
+        </a>
+
+        <!-- 音乐控制球 -->
+        <div class="control-ball music-controls">
+            <i class="fas fa-music"></i>
+            <div class="volume-slider-container">
+                <i class="fas fa-volume-up volume-icon"></i>
+                <input type="range" min="0" max="1" step="0.01" value="0.5" class="volume-slider" id="volumeSlider">
+            </div>
+        </div>
+    </div>
+
+    <!-- 背景音乐元素 -->
+    <audio id="bg-music" loop>
+        <source src="尼日尔bgm.mp3" type="audio/mp3">
+        您的浏览器不支持音频播放。
+    </audio>
+
+    <!-- 页脚 -->
+    <footer class="bg-oil text-white py-10 border-t border-sand/30">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <p class="text-sand/70">专题网站 · 尼日尔驱逐中企高管风波</p>
+                <p class="text-sand/50 text-sm mt-2">© 2025 暨南大学新闻与传播学院一带一路网络传播小组</p>
+                <p class="text-sand/10 text-sm mt-2">部分图片素材来自网络，仅供学习交流，无商业用途，可联系网页开发小组删除。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        // 风沙粒子特效
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('sandParticles');
+            const ctx = canvas.getContext('2d');
+            
+            // 调整画布尺寸
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // 粒子数量随屏幕大小调整
+            const particleCount = Math.max(50, Math.min(200, window.innerWidth / 10));
+            let particles = [];
+
+            // 粒子对象
+            function Particle() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX =Math.random() * 1 + 0.5;
+                this.speedY = (Math.random() - 0.5) * 2;
+                this.opacity = Math.random() * 0.5 + 0.1;
+
+                // 风沙流动方向随屏幕宽度变化
+                if (window.innerWidth > 768) {
+                    this.speedX = (Math.random() - 0.3) * 3; // 桌面端更明显的横向流动
+                } else {
+                    this.speedX = (Math.random() - 0.5) * 2; // 移动端随机流动
+                }
+            }
+
+            // 初始化粒子
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            // 绘制粒子
+            function drawParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach(particle => {
+                    // 沙黄色粒子
+                    ctx.fillStyle = `rgba(210, 180, 140, ${particle.opacity})`;
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // 更新粒子位置
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+
+                    // 循环效果
+                    if (particle.x < 0) particle.x = canvas.width;
+                    if (particle.x > canvas.width) particle.x = 0;
+                    if (particle.y < 0) particle.y = canvas.height;
+                    if (particle.y > canvas.height) particle.y = 0;
+                });
+
+                requestAnimationFrame(drawParticles);
+            }
+            
+            // 启动动画
+            drawParticles();
+        });
+
+        // 视频播放控制
+        document.getElementById('video-poster').addEventListener('click', function() {
+            const video = document.getElementById('darwin-video');
+            const poster = document.getElementById('video-poster');
+
+            poster.classList.add('hidden');
+            video.classList.remove('hidden');
+            video.play();
+        });
+
+        // 视频结束时显示海报
+        document.getElementById('darwin-video').addEventListener('ended', function() {
+            const video = document.getElementById('darwin-video');
+            const poster = document.getElementById('video-poster');
+
+            video.classList.add('hidden');
+            poster.classList.remove('hidden');
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-oil/90', 'backdrop-blur-md', 'shadow-lg');
+                nav.classList.remove('bg-transparent');
+            } else {
+                nav.classList.remove('bg-oil/90', 'backdrop-blur-md', 'shadow-lg');
+                nav.classList.add('bg-transparent');
+            }
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 地图动画
+        function animateMap() {
+            const nigerMarker = document.getElementById('niger-marker');
+            const niameyMarker = document.getElementById('niamey-marker');
+            const agademMarker = document.getElementById('agadem-marker');
+            const zinderMarker = document.getElementById('zinder-marker');
+            const line1 = document.getElementById('line1');
+            const line2 = document.getElementById('line2');
+            
+            // 逐步显示地图元素
+            setTimeout(() => {
+                nigerMarker.style.opacity = '1';
+            }, 500);
+            
+            setTimeout(() => {
+                niameyMarker.style.opacity = '1';
+            }, 1500);
+            
+            setTimeout(() => {
+                line1.style.opacity = '1';
+                agademMarker.style.opacity = '1';
+            }, 2500);
+            
+            setTimeout(() => {
+                line2.style.opacity = '1';
+                zinderMarker.style.opacity = '1';
+            }, 3500);
+        }
+        
+        // 页面加载完成后执行
+        window.addEventListener('load', function() {
+            animateMap();
+            
+            // 核心语句动画
+            const choiceText1 = document.getElementById('choice-text-1');
+            const choiceText2 = document.getElementById('choice-text-2');
+            const choiceText3 = document.getElementById('choice-text-3');
+            
+            // 监听滚动，当滚动到一定位置时显示核心语句
+            window.addEventListener('scroll', function() {
+                const choiceSection = document.getElementById('choice');
+                const choiceSectionTop = choiceSection.offsetTop;
+                const windowHeight = window.innerHeight;
+                
+                if (window.scrollY > choiceSectionTop - windowHeight + 200) {
+                    choiceText1.style.animation = 'slideInLeft 1s ease forwards';
+                    setTimeout(() => {
+                        choiceText2.style.animation = 'slideInRight 1s ease forwards';
+                        setTimeout(() => {
+                            choiceText3.style.animation = 'fadeIn 1s ease forwards';
+                        }, 500);
+                    }, 500);
+                }
+            });
+        });
+
+        // 驱逐原因卡片动画
+        gsap.from('.cause-card', {
+            scrollTrigger: {
+                trigger: '#causes',
+                start: 'top center',
+                end: 'bottom center',
+                toggleActions: 'play none none none'
+            },
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            duration: 0.8
+        });
+
+        // 风险卡片动画
+        gsap.from('.risk-item', {
+            scrollTrigger: {
+                trigger: '#analysis',
+                start: 'top center',
+                end: 'bottom center',
+                toggleActions: 'play none none none'
+            },
+            y: 50,
+            opacity: 0,
+            stagger: 0.3,
+            duration: 0.8
+        });
+
+        // 按钮悬停动画增强
+        document.querySelectorAll('.game-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 25px rgba(183, 65, 14, 0.4)';
+            });
+
+            btn.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '';
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const musicControl = document.getElementById('music-control');
+            const musicIcon = document.getElementById('music-icon');
+            const volumeSlider = document.getElementById('volume-slider');
+            const volumeControl = document.getElementById('volume');
+
+            // 修复点：使用正确的文件名
+            const bgMusic = new Audio("尼日尔bgm.mp3");
+            bgMusic.loop = true;
+            bgMusic.volume = 0.7;
+
+            let isPlaying = false;
+            let isSliderVisible = false;
+
+            musicControl.addEventListener('click', function() {
+                if (!isPlaying) {
+                    bgMusic.play();
+                    musicIcon.classList.remove('fa-volume-off');
+                    musicIcon.classList.add('fa-volume-up');
+                    isPlaying = true;
+                } else {
+                    bgMusic.pause();
+                    musicIcon.classList.remove('fa-volume-up');
+                    musicIcon.classList.add('fa-volume-off');
+                    isPlaying = false;
+                }
+                toggleVolumeSlider();
+            });
+
+            volumeControl.addEventListener('input', function() {
+                bgMusic.volume = this.value;
+            });
+
+            function toggleVolumeSlider() {
+                if (isSliderVisible) {
+                    volumeSlider.classList.add('opacity-0', 'invisible');
+                    isSliderVisible = false;
+                } else {
+                    volumeSlider.classList.remove('opacity-0', 'invisible');
+                    isSliderVisible = true;
+                }
+            }
+
+            document.addEventListener('click', function(event) {
+                if (!musicControl.contains(event.target) && !volumeSlider.contains(event.target)) {
+                    if (isSliderVisible) {
+                        volumeSlider.classList.add('opacity-0', 'invisible');
+                        isSliderVisible = false;
+                    }
+                }
+            });
+        });
+
+
+    </script>
+</body>
+</html>
